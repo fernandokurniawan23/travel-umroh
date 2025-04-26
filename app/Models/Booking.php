@@ -15,4 +15,10 @@ class Booking extends Model
     {
         return $this->belongsTo(TravelPackage::class);
     }
+
+    //relasi ke user (bisa dihapus)
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

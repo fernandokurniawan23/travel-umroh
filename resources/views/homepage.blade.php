@@ -50,7 +50,7 @@
             Popular Package
         </h2>
 
-        <div class="popular__container swiper">
+        <div class="popular__container swiper swiper-container">
             <div class="swiper-wrapper">
                 @foreach($travel_packages as $travel_package)
                     <article class="popular__card swiper-slide">
@@ -100,10 +100,8 @@
                     Perjalanan Umroh yang Nyaman & Penuh Berkah
                 </h2>
                 <p class="value__description">
-                    Kami siap melayani Anda dengan pengalaman terbaik dalam perjalanan ibadah umroh. 
-                    Kami hadir untuk memberikan pilihan terbaik,
-                    memastikan kenyamanan dan kelancaran ibadah Anda.
-                </p>
+                    Dengan Izin Umroh U.14/2022 PT. Rihlah Assofa Amanah, Haromain Travel 
+                    siap melayani Anda dengan pengalaman terbaik dalam perjalanan ibadah umroh.
             </div>
 
             <div class="value__accordion">

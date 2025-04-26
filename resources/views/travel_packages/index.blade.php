@@ -38,8 +38,8 @@
                     />
                     <div class="popular__data">
                     <h2 class="popular__price">Rp {{ number_format($travel_package->price, 0, ',', '.') }}</h2>
-                    <h3 class="popular__title">{{ preg_replace('/-\d+$/', '', $travel_package->location) }}</h3>
-                    <p class="popular__description">{{ $travel_package->type }}</p>
+                    <h3 class="popular__description">{{ $travel_package->type }}</h3>
+                    <p class="popular__title">{{ preg_replace('/-\d+$/', '', $travel_package->location) }}</p>
                     </div>
                 </a>
                 </article>

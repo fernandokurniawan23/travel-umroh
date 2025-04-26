@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use App\Http\Requests\BookingRequest;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
@@ -20,6 +21,7 @@ class BookingController extends Controller
 
         // Simpan data ke database
         Booking::create([
+             'user_id' => Auth::id(),
             'name' => $request->name,
             'email' => $request->email,
             'number_phone' => $request->number_phone,

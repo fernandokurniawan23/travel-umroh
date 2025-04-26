@@ -24,21 +24,24 @@ class LoginController extends Controller
         return '/';
     }
 
-    /**
-     * The user has been authenticated.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
     protected function authenticated(Request $request, $user)
     {
-        // Cek jika email belum terverifikasi
         if (!$user->hasVerifiedEmail()) {
-            auth()->logout(); // Logout user
+            auth()->logout();
             return redirect()->route('login')->with('error', 'Anda harus memverifikasi email Anda sebelum dapat login.');
         }
 
         return redirect()->intended($this->redirectPath());
+    }
+
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        $request->session()->forget('url.intended'); // Hapus URL yang disimpan biar gak redirect aneh-aneh
+
+        return redirect('/'); // Setelah logout langsung ke halaman utama
     }
 }

@@ -11,7 +11,7 @@
               <div class="feature__container container">
                 <div class="feature__data">
                   <h2 class="feature__subtitle">{{ $blog->title }}</h2>
-                  <h1 class="feature__title">{{ date('d M Y',strtotime($blog->created_at)) }}</h1>
+                  <!-- <h1 class="feature__title">{{ date('d M Y',strtotime($blog->created_at)) }}</h1> -->
                 </div>
               </div>
             </section>
@@ -24,24 +24,34 @@
         <div class="blog__container container">
           <div class="content__container">
             <div class="blog__detail">
-              {!! $blog->description !!}
-              <div class="blog__footer" style="margin-top: 2rem;">
-                <div class="blog__reaction">{{ date('d M Y', strtotime($blog->created_at)) }}</div>
-                <div class="blog__reaction">
-                  <i class="bx bx-show"></i>
-                  <span>{{ $blog->reads }}</span>
-                </div>
+            {!! \Illuminate\Support\Str::of($blog->description)->replaceMatches('/<oembed url="(.*?)"><\/oembed>/', function ($matches) {
+                return '<iframe width="100%" height="400" src="' . str_replace('watch?v=', 'embed/', $matches[1]) . '" frameborder="0" allowfullscreen></iframe>';
+            }) !!}
+            <div class="blog__footer" style="margin-top: 2rem;">
+              <div class="blog__reaction">{{ date('d M Y', strtotime($blog->created_at)) }}</div>
+              <div class="blog__reaction">
+                <i class="bx bx-show"></i>
+                <span>{{ $blog->reads }}</span>
               </div>
             </div>
+          </div>
             <div class="package-travel">
               <h3>Category</h3>
+              <ul>
+                <li>
+                  <a href="{{ route('blog.category', $blog->category->slug) }}">
+                    {{ $blog->category->name }}
+                  </a>
+                </li>
+              </ul>
+              <!-- <h3>Category</h3>
               <ul>
                 @foreach($categories as $category)
                     <li>
                         <a href="{{ route('blog.category', $category->slug) }}">{{ $category->name }}</a>
                     </li>
                 @endforeach
-              </ul>
+              </ul> -->
               <h3 style="margin-bottom: 1rem">Popular Trip</h3>
               @foreach($travel_packages as $travel_package)
                 <article class="popular__card" style="margin-bottom: 1rem">
