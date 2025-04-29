@@ -15,6 +15,7 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    // Atur redirect setelah login
     protected function redirectTo()
     {
         if (auth()->user()->is_admin) {
@@ -24,15 +25,7 @@ class LoginController extends Controller
         return '/';
     }
 
-    protected function authenticated(Request $request, $user)
-    {
-        if (!$user->hasVerifiedEmail()) {
-            auth()->logout();
-            return redirect()->route('login')->with('error', 'Anda harus memverifikasi email Anda sebelum dapat login.');
-        }
-
-        return redirect()->intended($this->redirectPath());
-    }
+    // (DIHAPUS) Method authenticated() yang cek verifikasi email dihapus ya!
 
     public function logout(Request $request)
     {
@@ -40,8 +33,17 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        $request->session()->forget('url.intended'); // Hapus URL yang disimpan biar gak redirect aneh-aneh
+        $request->session()->forget('url.intended');
 
-        return redirect('/'); // Setelah logout langsung ke halaman utama
+        return redirect('/');
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        if (! $user->hasVerifiedEmail()) {
+            auth()->logout();
+            return redirect()->route('verification.notice')
+                ->with('error', 'Silakan verifikasi email Anda terlebih dahulu.');
+        }
     }
 }

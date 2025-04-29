@@ -31,22 +31,25 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
-        $user = User::create([
+        return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'is_admin' => 0,
         ]);
-
-        event(new Registered($user));
-
-        return $user;
     }
 
-    protected function registered(Request $request, $user)
-    {
-        auth()->logout();
+    // protected function registered(Request $request, $user)
+    // {
+    //     // Trigger event untuk kirim email verifikasi
+    //     event(new Registered($user));
 
-        return redirect('/login')->with('message', 'Akun Anda telah dibuat! Silakan verifikasi email sebelum login.');
+    //     // Redirect ke halaman verifikasi
+    //     return redirect()->route('verification.notice')->with('message', 'Link verifikasi telah dikirim ke email Anda.');
+    // }
+
+    protected function redirectTo()
+    {
+        return route('verification.notice'); // Akan mengarah ke /email/verify
     }
 }

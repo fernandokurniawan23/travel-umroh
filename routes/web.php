@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes(); 
+Auth::routes();
 
 // Tambahkan ini setelah Auth::routes();
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -45,7 +45,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [\App\Http\Controllers\Auth\RegisterController::class, 'register']);
 });
 
-Route::group(['middleware' => ['is_admin','auth'], 'prefix' => 'admin', 'as' => 'admin.'], function() {
+Route::group(['middleware' => ['is_admin', 'auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
     // dashboard statistik (opsional)
@@ -53,17 +53,17 @@ Route::group(['middleware' => ['is_admin','auth'], 'prefix' => 'admin', 'as' => 
 
     // booking
     Route::resource('bookings', \App\Http\Controllers\Admin\BookingController::class)->only(['index', 'destroy']);
-    
+
     // travel packages
     Route::resource('travel_packages', \App\Http\Controllers\Admin\TravelPackageController::class)->except('show');
-    Route::resource('travel_packages.galleries', \App\Http\Controllers\Admin\GalleryController::class)->except(['create', 'index','show']);
-    
+    Route::resource('travel_packages.galleries', \App\Http\Controllers\Admin\GalleryController::class)->except(['create', 'index', 'show']);
+
     // categories
     Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class)->except('show');
-    
+
     // blogs
     Route::resource('blogs', \App\Http\Controllers\Admin\BlogController::class)->except('show');
-    
+
     // profile
     Route::get('users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
     Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
@@ -74,8 +74,8 @@ Route::group(['middleware' => ['is_admin','auth'], 'prefix' => 'admin', 'as' => 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('homepage');
 
 // travel packages
-Route::get('travel-packages',[\App\Http\Controllers\TravelPackageController::class, 'index'])->name('travel_package.index');
-Route::get('travel-packages/{travel_package:slug}',[\App\Http\Controllers\TravelPackageController::class, 'show'])->name('travel_package.show');
+Route::get('travel-packages', [\App\Http\Controllers\TravelPackageController::class, 'index'])->name('travel_package.index');
+Route::get('travel-packages/{travel_package:slug}', [\App\Http\Controllers\TravelPackageController::class, 'show'])->name('travel_package.show');
 
 // blogs
 Route::get('blogs', [\App\Http\Controllers\BlogController::class, 'index'])->name('blog.index');
@@ -83,9 +83,7 @@ Route::get('blogs/{blog:slug}', [\App\Http\Controllers\BlogController::class, 's
 Route::get('blogs/category/{category:slug}', [\App\Http\Controllers\BlogController::class, 'category'])->name('blog.category');
 
 // contact
-Route::get('contact', function() {
-    return view('contact');
-})->name('contact');
+Route::get('contact', fn() => view('contact'))->name('contact');
 
-// booking
-Route::post('booking', [App\Http\Controllers\BookingController::class, 'store'])->name('booking.store');
+// booking - hanya bisa diakses setelah login
+Route::post('booking', [App\Http\Controllers\BookingController::class, 'store'])->name('booking.store')->middleware('auth');
