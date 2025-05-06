@@ -99,46 +99,54 @@
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Grafik Booking per Paket
-    var ctx = document.getElementById('bookingChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar', 
-        data: {
-            labels: @json($labels), // Nama paket
-            datasets: [{
-                label: 'Jumlah Booking',
-                data: @json($values), // Total booking per paket
-                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: { y: { beginAtZero: true } }
-        }
-    });
+    document.addEventListener("DOMContentLoaded", function() {
+        // Grafik Booking per Paket
+        var ctx = document.getElementById('bookingChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: @json($labels), // Nama paket
+                datasets: [{
+                    label: 'Jumlah Booking',
+                    data: @json($values), // Total booking per paket
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
 
-    // Grafik Tren Booking per Bulan
-    var ctx2 = document.getElementById('trendBookingChart').getContext('2d');
-    new Chart(ctx2, {
-        type: 'line',
-        data: {
-            labels: @json($months), // Nama bulan
-            datasets: [{
-                label: 'Jumlah Booking Per Bulan',
-                data: @json($totals), // Total booking per bulan
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: { y: { beginAtZero: true } }
-        }
+        // Grafik Tren Booking per Bulan
+        var ctx2 = document.getElementById('trendBookingChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: @json($months), // Nama bulan
+                datasets: [{
+                    label: 'Jumlah Booking Per Bulan',
+                    data: @json($totals), // Total booking per bulan
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
     });
-});
 </script>
 @endsection

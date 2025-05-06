@@ -45,14 +45,14 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [\App\Http\Controllers\Auth\RegisterController::class, 'register']);
 });
 
-Route::group(['middleware' => ['is_admin', 'auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
+Route::group(['middleware' => ['role:administrator,ketua,sekretaris,bendahara,administrasi', 'auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
     // dashboard statistik (opsional)
     // Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard.stats');
 
     // booking
-    Route::resource('bookings', \App\Http\Controllers\Admin\BookingController::class)->only(['index', 'destroy']);
+    Route::resource('bookings', \App\Http\Controllers\Admin\BookingController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
 
     // travel packages
     Route::resource('travel_packages', \App\Http\Controllers\Admin\TravelPackageController::class)->except('show');
@@ -64,8 +64,11 @@ Route::group(['middleware' => ['is_admin', 'auth'], 'prefix' => 'admin', 'as' =>
     // blogs
     Route::resource('blogs', \App\Http\Controllers\Admin\BlogController::class)->except('show');
 
+    // Users management by admin
+    Route::resource('users', \App\Http\Controllers\Admin\UserController::class)->except(['show']);
+
     // profile
-    Route::get('users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+    // Route::get('users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
     Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
     Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
 });
@@ -87,3 +90,6 @@ Route::get('contact', fn() => view('contact'))->name('contact');
 
 // booking - hanya bisa diakses setelah login
 Route::post('booking', [App\Http\Controllers\BookingController::class, 'store'])->name('booking.store')->middleware('auth');
+
+//pembayaran midtrans sukses
+Route::get('/payment/success', [App\Http\Controllers\PaymentController::class, 'success']);
