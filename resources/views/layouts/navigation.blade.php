@@ -20,8 +20,7 @@
                 </a>
             </li>
 
-            <!-- Users (Hanya administrator) -->
-            @if(Auth::user()->role === 'administrator')
+            @if(Auth::user()->role === 'administrator' || Auth::user()->role === 'ketua')
             <li class="nav-item">
                 <a href="{{ route('admin.users.index') }}" class="nav-link">
                     <i class="nav-icon fas fa-users"></i>

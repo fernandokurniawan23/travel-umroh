@@ -21,7 +21,7 @@
     <!-- Swiper navigation buttons
     <div class="swiper-button-next"></div>
     <div class="swiper-button-prev"></div> -->
-    
+
     <!-- Optional: Pagination -->
     <div class="swiper-pagination"></div>
   </div>
@@ -37,17 +37,20 @@
 
       <div class="package-travel">
         <h3>Booking Now</h3>
+        <p style="margin: 10px 0; color: #555; line-height: 1.6; text-align: left;">
+          Belum punya KTP/paspor atau ragu upload? Kolom bisa dikosongkan. Nantinya Admin akan hubungi Anda untuk lengkapi data.
+        </p>
         <div class="card">
           <form action="{{ route('booking.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="travel_package_id" value="{{ $travel_package->id }}">
-            <input type="text" name="name" placeholder="Your Name" {{ Auth::check() ? '' : 'disabled' }} />
-            <input type="email" name="email" placeholder="Your Email" {{ Auth::check() ? '' : 'disabled' }} />
-            <input type="number" name="number_phone" placeholder="Your Number" {{ Auth::check() ? '' : 'disabled' }} />
+            <input type="text" name="name" placeholder="Your Name" required {{ Auth::check() ? '' : 'disabled' }} />
+            <input type="email" name="email" placeholder="Your Email" required {{ Auth::check() ? '' : 'disabled' }} />
+            <input type="number" name="number_phone" placeholder="Your Number" required {{ Auth::check() ? '' : 'disabled' }} />
 
             <div class="ktp-file">
-              <label for="ktp" class="ktp-file-label">Your KTP</label>
-              <input type="file" class="ktp-file-input" id="ktp" name="ktp" accept="image/*" required {{ Auth::check() ? '' : 'disabled' }} />
+              <label for="ktp" class="ktp-file-label">Your KTP (Opsional)</label>
+              <input type="file" class="ktp-file-input" id="ktp" name="ktp" accept="image/*" {{ Auth::check() ? '' : 'disabled' }} />
             </div>
 
             <div class="paspor-file">
@@ -59,7 +62,7 @@
 
             @if(!Auth::check())
             <p class="text-danger" style="text-align:center; margin-top:10px;">
-              Silakan <a href="{{ route('login') }}">login</a> terlebih dahulu untuk melakukan booking.
+              Silakan <a href="{{ route('login') }}">login</a> terlebih dahulu untuk melakukan booking. Anda juga dapat melakukan booking melalui admin.
             </p>
             @endif
           </form>
@@ -218,7 +221,7 @@
   const close = document.getElementById('close');
   const alert = document.getElementById('alert');
   if (close) {
-    close.addEventListener('click', function () {
+    close.addEventListener('click', function() {
       alert.style.display = 'none';
     });
   }

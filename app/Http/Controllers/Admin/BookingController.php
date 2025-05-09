@@ -38,6 +38,7 @@ class BookingController extends Controller
             'number_phone' => 'required|string|max:20',
             'ktp' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'paspor' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'vaccine_document' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
             'payment_status' => 'nullable|string|max:50',
             'amount_paid' => 'nullable|numeric',
             'remaining_balance' => 'nullable|numeric',
@@ -55,6 +56,10 @@ class BookingController extends Controller
 
         if ($request->hasFile('paspor')) {
             $data['paspor'] = $request->file('paspor')->store('uploads/paspor', 'public');
+        }
+
+        if ($request->hasFile('vaccine_document')) {
+            $data['vaccine_document'] = $request->file('vaccine_document')->store('uploads/vaccine_document', 'public');
         }
 
         $data['user_id'] = auth()->id();
@@ -97,6 +102,7 @@ class BookingController extends Controller
             'number_phone' => 'required|string|max:20',
             'ktp' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'paspor' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'vaccine_document' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
             'payment_status' => 'nullable|string|max:50',
             'amount_paid' => 'nullable|numeric',
             'remaining_balance' => 'nullable|numeric',
@@ -120,6 +126,13 @@ class BookingController extends Controller
                 \Illuminate\Support\Facades\Storage::delete('public/' . $booking->paspor);
             }
             $data['paspor'] = $request->file('paspor')->store('uploads/paspor', 'public');
+        }
+
+        if ($request->hasFile('vaccine_document')) {
+            if ($booking->vaccine_document) {
+                \Illuminate\Support\Facades\Storage::delete('public/' . $booking->vaccine_document);
+            }
+            $data['vaccine_document'] = $request->file('vaccine_document')->store('uploads/vaccine_document', 'public');
         }
 
         $booking->update($data);

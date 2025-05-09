@@ -22,7 +22,9 @@ class BookingController extends Controller
     public function store(BookingRequest $request)
     {
         // Simpan file KTP ke dalam storage
-        $ktpPath = $request->file('ktp')->store('ktp_uploads', 'public');
+        $ktpPath = $request->hasFile('ktp')
+            ? $request->file('ktp')->store('ktp_uploads', 'public')
+            : null;
 
         // Simpan file Paspor jika diunggah (opsional)
         $pasporPath = $request->hasFile('paspor')

@@ -58,6 +58,16 @@
                                     <small class="form-text text-muted">File Paspor saat ini: <a href="{{ Storage::url($booking->paspor) }}" target="_blank">Lihat</a></small>
                                     @endif
                                 </div>
+                                <div class="form-group">
+                                    <label for="vaccine_document">Dokumen Vaksin</label>
+                                    <input type="file" class="form-control" id="vaccine_document" name="vaccine_document" accept=".pdf,.jpg,.jpeg,.png">
+                                    @if ($booking->vaccine_document)
+                                    <small class="form-text text-muted">
+                                        File saat ini:
+                                        <a href="{{ Storage::url($booking->vaccine_document) }}" target="_blank">Lihat</a>
+                                    </small>
+                                    @endif
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">

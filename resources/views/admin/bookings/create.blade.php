@@ -46,8 +46,12 @@
                                     <input type="file" class="form-control" id="ktp" name="ktp">
                                 </div>
                                 <div class="form-group">
-                                    <label for="paspor">Paspor (opsional)</label>
+                                    <label for="paspor">Paspor</label>
                                     <input type="file" class="form-control" id="paspor" name="paspor">
+                                </div>
+                                <div class="form-group">
+                                    <label for="vaccine_document">Dokumen Vaksin</label>
+                                    <input type="file" class="form-control" id="vaccine_document" name="vaccine_document">
                                 </div>
                             </div>
                             <div class="col-md-6">

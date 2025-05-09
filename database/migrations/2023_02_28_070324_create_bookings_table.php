@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('number_phone');
-            $table->string('ktp'); // Kolom KTP
+            $table->string('ktp')->nullable(); // Kolom KTP opsional
             $table->string('paspor')->nullable(); // Kolom Paspor opsional
+            $table->string('vaccine_document')->nullable()->after('paspor');
 
             // Relasi ke travel_packages
             $table->foreignId('travel_package_id')->constrained()->cascadeOnDelete();
@@ -37,7 +38,7 @@ return new class extends Migration
             $table->timestamp('paid_at')->nullable()->after('transaction_id');       // waktu dibayar
 
             // Dari add_payment
-            $table->integer('amount_paid')->nullable()->after('payment_status'); // DP
+            $table->integer('amount_paid')->nullable()->after('payment_status'); // DP / MNL
             $table->integer('remaining_balance')->nullable()->after('amount_paid'); // Sisa bayar
 
             $table->timestamps();

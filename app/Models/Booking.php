@@ -17,6 +17,7 @@ class Booking extends Model
         'number_phone',
         'ktp',
         'paspor',
+        'vaccine_document',
         'travel_package_id',
         'user_id',
         'order_id',

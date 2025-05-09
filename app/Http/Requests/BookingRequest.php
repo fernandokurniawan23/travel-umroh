@@ -26,7 +26,7 @@ class BookingRequest extends FormRequest
             'email' => 'required|email',
             'number_phone' => 'required',
             // 'date' => ['required', 'date'],
-            'ktp' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'ktp' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'paspor' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Tambahkan validasi paspor (opsional)
             'travel_package_id' => 'required',
         ];

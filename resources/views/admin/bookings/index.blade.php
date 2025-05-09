@@ -29,6 +29,7 @@
                                         <th>Number Phone</th>
                                         <th>KTP</th>
                                         <th>Paspor</th>
+                                        <th>Vaksin</th>
                                         <th>Travel Package</th>
                                         <th>Payment Status</th>
                                         <th>Amount Paid</th>
@@ -53,7 +54,7 @@
                                                 <img src="{{ Storage::url($booking->ktp) }}" alt="KTP" width="50">
                                             </a>
                                             @else
-                                            -
+                                            <span class="text-muted">No ktp</span>
                                             @endif
                                         </td>
                                         <td>
@@ -63,6 +64,15 @@
                                             </a>
                                             @else
                                             <span class="text-muted">No Passport</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($booking->vaccine_document)
+                                            <a href="{{ Storage::url($booking->vaccine_document) }}" target="_blank">
+                                                <i class="fa fa-file"></i> Lihat
+                                            </a>
+                                            @else
+                                            <span class="text-muted"> No Vaccine</span>
                                             @endif
                                         </td>
                                         <td>{{ $booking->travel_package->type }}</td>

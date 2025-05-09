@@ -54,7 +54,7 @@ class LoginController extends Controller
             case 'administrasi':
                 return redirect('/admin/dashboard');
             default:
-                return redirect('/home'); // fallback umum
+                return redirect('/'); // fallback umum
         }
     }
 }
