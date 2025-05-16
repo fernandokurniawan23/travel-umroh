@@ -34,9 +34,9 @@ class TravelPackageController extends Controller
      */
     public function store(TravelPackageRequest $request)
     {
-        if($request->validated()) {
+        if ($request->validated()) {
             $slug = Str::slug($request->type, '-');
-            $travel_package = TravelPackage::create($request->validated() + ['slug' => $slug ]);
+            $travel_package = TravelPackage::create($request->validated() + ['slug' => $slug]);
         }
 
         return redirect()->route('admin.travel_packages.edit', [$travel_package])->with([
@@ -46,13 +46,21 @@ class TravelPackageController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(TravelPackage $travel_package)
     {
         $galleries = Gallery::paginate(10);
-        
-        return view('admin.travel_packages.edit', compact('travel_package','galleries'));
+
+        return view('admin.travel_packages.edit', compact('travel_package', 'galleries'));
     }
 
     /**
@@ -60,7 +68,7 @@ class TravelPackageController extends Controller
      */
     public function update(TravelPackageRequest $request, TravelPackage $travel_package)
     {
-        if($request->validated()) {
+        if ($request->validated()) {
             $slug = Str::slug($request->type, '-');
             $travel_package->update($request->validated() + ['slug' => $slug]);
         }

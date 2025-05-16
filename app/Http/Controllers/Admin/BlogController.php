@@ -37,9 +37,10 @@ class BlogController extends Controller
      */
     public function store(BlogRequest $request)
     {
-        if($request->validated()) {
+        if ($request->validated()) {
             $image = $request->file('image')->store(
-                'blog/images', 'public'
+                'blog/images',
+                'public'
             );
             $slug = Str::slug($request->title, '-');
 
@@ -65,9 +66,9 @@ class BlogController extends Controller
      */
     public function edit(Blog $blog)
     {
-        $categories = Category::get(['name','id']);
+        $categories = Category::get(['name', 'id']);
 
-        return view('admin.blogs.edit', compact('blog','categories'));
+        return view('admin.blogs.edit', compact('blog', 'categories'));
     }
 
     /**
@@ -75,15 +76,16 @@ class BlogController extends Controller
      */
     public function update(BlogRequest $request, Blog $blog)
     {
-        if($request->validated()) {
+        if ($request->validated()) {
             $slug = Str::slug($request->title, '-');
-            if($request->image) {
-                File::delete('storage/'. $blog->image);
+            if ($request->image) {
+                File::delete('storage/' . $blog->image);
                 $image = $request->file('image')->store(
-                    'blog/images', 'public'
+                    'blog/images',
+                    'public'
                 );
                 $blog->update($request->except('image') + ['slug' => $slug, 'image' => $image]);
-            }else {
+            } else {
                 $blog->update($request->validated() + ['slug' => $slug]);
             }
         }
@@ -99,7 +101,7 @@ class BlogController extends Controller
      */
     public function destroy(Blog $blog)
     {
-        File::delete('storage/'. $blog->image);
+        File::delete('storage/' . $blog->image);
         $blog->delete();
 
         return redirect()->back()->with([

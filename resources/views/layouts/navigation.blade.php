@@ -19,8 +19,8 @@
                     <p>{{ __('Dashboard') }}</p>
                 </a>
             </li>
-
-            @if(Auth::user()->role === 'administrator' || Auth::user()->role === 'ketua')
+            <!-- user (Admin, ketua, administrasi) -->
+            @if(Auth::user()->role === 'administrator' || Auth::user()->role === 'ketua' || Auth::user()->role === 'administrasi')
             <li class="nav-item">
                 <a href="{{ route('admin.users.index') }}" class="nav-link">
                     <i class="nav-icon fas fa-users"></i>
@@ -48,7 +48,7 @@
             @endif
 
             <!-- Blog (Admin dan ketua) -->
-            @if(in_array(Auth::user()->role, ['administrator', 'ketua']))
+            @if(in_array(Auth::user()->role, ['administrator', 'ketua','administrasi']))
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-circle nav-icon"></i>

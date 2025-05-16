@@ -18,16 +18,22 @@ class BlogController extends Controller
 
     public function show(Blog $blog)
     {
-        $relatedBlogs = Blog::where('id','!=',$blog->id)
-                ->where('category_id', $blog->category_id)
-                ->get();
+        $relatedBlogs = Blog::where('id', '!=', $blog->id)
+            ->when($blog->category_id, function ($query) use ($blog) {
+                $query->where('category_id', $blog->category_id);
+            })
+            ->latest()
+            ->take(3)
+            ->get();
+
         $categories = Category::get();
-        $travel_packages = TravelPackage::with('galleries')->get()->take(2);
+        $travel_packages = TravelPackage::with('galleries')->take(2)->get();
 
         $blog->incrementReadCount();
 
-        return view('blogs.show', compact('blog','travel_packages','relatedBlogs','categories'));
+        return view('blogs.show', compact('blog', 'travel_packages', 'relatedBlogs', 'categories'));
     }
+
 
     public function category(Category $category)
     {

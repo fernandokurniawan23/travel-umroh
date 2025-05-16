@@ -16,11 +16,12 @@ class GalleryController extends Controller
      */
     public function store(GalleryRequest $request, TravelPackage $travel_package)
     {
-        if($request->validated()){
+        if ($request->validated()) {
             $images = $request->file('images')->store(
-                'travel_package/gallery', 'public'
+                'travel_package/gallery',
+                'public'
             );
-            Gallery::create($request->except('images') + ['images' => $images,'travel_package_id' => $travel_package->id]);
+            Gallery::create($request->except('images') + ['images' => $images, 'travel_package_id' => $travel_package->id]);
         }
 
         return redirect()->route('admin.travel_packages.edit', [$travel_package])->with([
@@ -30,26 +31,35 @@ class GalleryController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(TravelPackage $travel_package,Gallery $gallery)
+    public function edit(TravelPackage $travel_package, Gallery $gallery)
     {
-        return view('admin.galleries.edit', compact('travel_package','gallery'));
+        return view('admin.galleries.edit', compact('travel_package', 'gallery'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(GalleryRequest $request,TravelPackage $travel_package, Gallery $gallery)
+    public function update(GalleryRequest $request, TravelPackage $travel_package, Gallery $gallery)
     {
-        if($request->validated()) {
-            if($request->images) {
-                File::delete('storage/'. $gallery->images);
+        if ($request->validated()) {
+            if ($request->images) {
+                File::delete('storage/' . $gallery->images);
                 $images = $request->file('images')->store(
-                    'travel_package/gallery', 'public'
+                    'travel_package/gallery',
+                    'public'
                 );
                 $gallery->update($request->except('images') + ['images' => $images, 'travel_package_id' => $travel_package->id]);
-            }else {
+            } else {
                 $gallery->update($request->validated());
             }
         }
@@ -63,9 +73,9 @@ class GalleryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TravelPackage $travel_package,Gallery $gallery)
+    public function destroy(TravelPackage $travel_package, Gallery $gallery)
     {
-        File::delete('storage/'. $gallery->images);
+        File::delete('storage/' . $gallery->images);
         $gallery->delete();
 
         return redirect()->back()->with([

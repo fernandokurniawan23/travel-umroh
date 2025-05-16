@@ -7,7 +7,9 @@
             <div class="row mb-2">
                 <div class="col-sm-12 justify-content-between d-flex">
                     <h1 class="m-0">{{ __('Travel Package') }}</h1>
+                    @if(auth()->user()->role == 'administrator')
                     <a href="{{ route('admin.travel_packages.create') }}" class="btn btn-primary btn-sm"> <i class="fa fa-plus"></i> </a>
+                    @endif
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -30,7 +32,9 @@
                                         <th>Type</th>
                                         <th>Location</th>
                                         <th>Price</th>
+                                        @if(auth()->user()->role == 'administrator')
                                         <th>Action</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -41,12 +45,17 @@
                                         <td>{{ $travel_package->location }}</td>
                                         <td>{{ $travel_package->price }}</td>
                                         <td>
+                                            @if(auth()->user()->role == 'administrator')
                                             <a href="{{ route('admin.travel_packages.edit', [$travel_package]) }}" class="btn btn-sm btn-info"> <i class="fa fa-edit"></i> </a>              
+                                            @endif
+
+                                            @if(auth()->user()->role == 'administrator')
                                             <form onclick="return confirm('are you sure ?');" class="d-inline-block" action="{{ route('admin.travel_packages.destroy', [$travel_package]) }}" method="post">
                                                 @csrf 
                                                 @method('delete')
                                                 <button class="btn btn-sm btn-danger"> <i class="fa fa-trash"></i> </button>
-                                            </form>                              
+                                            </form>
+                                            @endif                              
                                         </td>
                                     </tr>
                                 @endforeach

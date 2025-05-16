@@ -1,6 +1,22 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\BookingController;
+use App\Http\Controllers\Admin\TravelPackageController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TravelPackageController as PublicTravelPackageController;
+use App\Http\Controllers\BlogController as PublicBlogController;
+use App\Http\Controllers\BookingController as PublicBookingController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Auth\RegisterController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,83 +29,134 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes();
+// Halaman utama
+Route::get('/', [HomeController::class, 'index'])->name('homepage');
 
-// Tambahkan ini setelah Auth::routes();
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Http\Request;
+// Travel Packages (Public)
+Route::get('travel-packages', [PublicTravelPackageController::class, 'index'])->name('travel_package.index');
+Route::get('travel-packages/{travel_package:slug}', [PublicTravelPackageController::class, 'show'])->name('travel_package.show');
 
-// Route untuk menampilkan halaman notifikasi verifikasi
+// Blogs (Public)
+Route::get('blogs', [PublicBlogController::class, 'index'])->name('blog.index');
+Route::get('blogs/{blog:slug}', [PublicBlogController::class, 'show'])->name('blog.show');
+Route::get('blogs/category/{category:slug}', [PublicBlogController::class, 'category'])->name('blog.category');
+
+// Contact
+Route::get('contact', fn() => view('contact'))->name('contact');
+
+// Booking (Public - Store memerlukan auth)
+Route::post('booking', [PublicBookingController::class, 'store'])->name('booking.store')->middleware('auth');
+
+// Pembayaran Midtrans Sukses
+Route::get('/payment/success', [PaymentController::class, 'success']);
+
+Auth::routes(['register' => true]);
+
+// Email Verification Routes
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
 
-// Route untuk menangani verifikasi email dari link yang dikirim ke email
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill(); // Menandai email sebagai terverifikasi
-    return redirect('/'); // Redirect ke halaman utama setelah verifikasi berhasil
+    $request->fulfill();
+    return redirect('/');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
-// Route untuk mengirim ulang email verifikasi
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
     return back()->with('message', 'Link verifikasi telah dikirim ulang!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-// Pastikan fitur register diaktifkan
-Auth::routes(['register' => true]);
+// Dashboard: semua role internal
+Route::middleware(['auth', 'role:administrator,ketua,sekretaris,bendahara,administrasi'])
+    ->prefix('admin')->as('admin.')
+    ->group(function () {
+        Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    });
 
-// Grup route untuk user yang belum login (guest)
-Route::middleware('guest')->group(function () {
-    Route::get('/register', [\App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])->name('register');
-    Route::post('/register', [\App\Http\Controllers\Auth\RegisterController::class, 'register']);
-});
+// Users:
+// Ketua administrator dan administrasi bisa akses index
+Route::middleware(['auth', 'role:administrator,ketua,administrasi'])
+    ->prefix('admin')->as('admin.')
+    ->group(function () {
+        Route::resource('users', UserController::class)->only(['index']);
+    });
 
-Route::group(['middleware' => ['role:administrator,ketua,sekretaris,bendahara,administrasi', 'auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
-    Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
-    // dashboard statistik (opsional)
-    // Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard.stats');
+// Khusus adminstrator: create, store, edit, update, destroy
+Route::middleware(['auth', 'role:administrator'])
+    ->prefix('admin')->as('admin.')
+    ->group(function () {
+        Route::resource('users', UserController::class)->except(['index', 'show']);
+    });
 
-    // booking
-    Route::resource('bookings', \App\Http\Controllers\Admin\BookingController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+// Booking:
+// Booking:
+// Semua role bisa lihat daftar booking
+Route::middleware(['auth', 'role:administrator,administrasi,ketua,sekretaris,bendahara'])
+    ->prefix('admin')->as('admin.')
+    ->group(function () {
+        Route::get('bookings', [BookingController::class, 'index'])->name('bookings.index');
+    });
 
-    // travel packages
-    Route::resource('travel_packages', \App\Http\Controllers\Admin\TravelPackageController::class)->except('show');
-    Route::resource('travel_packages.galleries', \App\Http\Controllers\Admin\GalleryController::class)->except(['create', 'index', 'show']);
+// administrator & administrasi full akses (tanpa index)
+Route::middleware(['auth', 'role:administrator,administrasi'])
+    ->prefix('admin')->as('admin.')
+    ->group(function () {
+        Route::get('bookings/create', [BookingController::class, 'create'])->name('bookings.create');
+        Route::post('bookings', [BookingController::class, 'store'])->name('bookings.store');
+        Route::get('bookings/{booking}', [BookingController::class, 'show'])->name('bookings.show');
+        Route::delete('bookings/{booking}', [BookingController::class, 'destroy'])->name('bookings.destroy');
+    });
 
-    // categories
-    Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class)->except('show');
+// administrator, administrasi, bendahara bisa edit dan update
+Route::middleware(['auth', 'role:administrator,administrasi,bendahara'])
+    ->prefix('admin')->as('admin.')
+    ->group(function () {
+        Route::get('bookings/{booking}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
+        Route::put('bookings/{booking}', [BookingController::class, 'update'])->name('bookings.update');
+        Route::patch('bookings/{booking}', [BookingController::class, 'update']); // Optional
+    });
 
-    // blogs
-    Route::resource('blogs', \App\Http\Controllers\Admin\BlogController::class)->except('show');
 
-    // Users management by admin
-    Route::resource('users', \App\Http\Controllers\Admin\UserController::class)->except(['show']);
+// Travel Package:
+Route::middleware(['auth', 'role:administrator,ketua,sekretaris'])
+    ->prefix('admin')->as('admin.')
+    ->group(function () {
+        Route::resource('travel_packages', TravelPackageController::class)->only(['index']);
+        Route::resource('travel_packages.galleries', \App\Http\Controllers\Admin\GalleryController::class)->only(['index']);
+    });
 
-    // profile
-    // Route::get('users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
-    Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
-    Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
-});
+Route::middleware(['auth', 'role:administrator'])
+    ->prefix('admin')->as('admin.')
+    ->group(function () {
+        Route::resource('travel_packages', TravelPackageController::class)->except(['index', 'show']);
+        Route::resource('travel_packages.galleries', \App\Http\Controllers\Admin\GalleryController::class)->except(['index', 'show']);
+    });
 
-// Halaman utama
-Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('homepage');
 
-// travel packages
-Route::get('travel-packages', [\App\Http\Controllers\TravelPackageController::class, 'index'])->name('travel_package.index');
-Route::get('travel-packages/{travel_package:slug}', [\App\Http\Controllers\TravelPackageController::class, 'show'])->name('travel_package.show');
+// Blog Category dan Blog:
+// Ketua - hanya bisa melihat (read only)
+Route::middleware(['auth', 'role:ketua,administrator,administrasi'])
+    ->prefix('admin')->as('admin.')
+    ->group(function () {
+        Route::resource('categories', CategoryController::class)->only(['index', 'show']);
+        Route::resource('blogs', BlogController::class)->only(['index', 'show']);
+    });
 
-// blogs
-Route::get('blogs', [\App\Http\Controllers\BlogController::class, 'index'])->name('blog.index');
-Route::get('blogs/{blog:slug}', [\App\Http\Controllers\BlogController::class, 'show'])->name('blog.show');
-Route::get('blogs/category/{category:slug}', [\App\Http\Controllers\BlogController::class, 'category'])->name('blog.category');
+// Administrator - full access
+Route::middleware(['auth', 'role:administrator,administrasi'])
+    ->prefix('admin')->as('admin.')
+    ->group(function () {
+        Route::resource('categories', CategoryController::class)->except(['index', 'show']);;
+        Route::resource('blogs', BlogController::class)->except(['index', 'show']);;
+    });
 
-// contact
-Route::get('contact', fn() => view('contact'))->name('contact');
 
-// booking - hanya bisa diakses setelah login
-Route::post('booking', [App\Http\Controllers\BookingController::class, 'store'])->name('booking.store')->middleware('auth');
-
-//pembayaran midtrans sukses
-Route::get('/payment/success', [App\Http\Controllers\PaymentController::class, 'success']);
+// Profile: semua role internal
+Route::middleware(['auth', 'role:administrator,ketua,sekretaris,bendahara,administrasi'])
+    ->prefix('admin')->as('admin.')
+    ->group(function () {
+        Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
+        Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
+    });

@@ -87,12 +87,12 @@
             @foreach($relatedBlogs as $relatedBlog)
             <article class="blog__card">
               <div class="blog__image">
-                    <a href="{{ route('blog.show', $blog->slug) }}">
-                        <img src="{{ Storage::url($blog->image) }}" alt="" class="blog__img" />
-                    </a>
-                    <a href="{{ route('blog.show', $blog->slug) }}" class="blog__button">
-                        <i class="bx bx-right-arrow-alt"></i>
-                    </a>
+                <a href="{{ route('blog.show', $relatedBlog->slug) }}">
+                  <img src="{{ Storage::url($relatedBlog->image) }}" alt="" class="blog__img" />
+                </a>
+                <a href="{{ route('blog.show', $relatedBlog->slug) }}" class="blog__button">
+                  <i class="bx bx-right-arrow-alt"></i>
+                </a>
               </div>
 
               <div class="blog__data">
@@ -102,7 +102,7 @@
                 </p>
 
                 <div class="blog__footer">
-                  <div class="blog__reaction">{{ date('d M Y', strtotime($relatedBlog->crated_at)) }}</div>
+                  <div class="blog__reaction">{{ date('d M Y', strtotime($relatedBlog->created_at)) }}</div>
                   <div class="blog__reaction">
                     <i class="bx bx-show"></i>
                     <span>{{ $relatedBlog->reads }}</span>
@@ -110,6 +110,7 @@
                 </div>
               </div>
             </article>
+
             @endforeach
           </div>
         </div>

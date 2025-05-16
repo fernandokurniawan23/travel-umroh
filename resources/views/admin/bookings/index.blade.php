@@ -6,9 +6,11 @@
         <div class="row mb-2">
             <div class="col-sm-12 justify-content-between d-flex">
                 <h1 class="m-0">{{ __('Booking') }}</h1>
+                @if(in_array(auth()->user()->role, ['administrator', 'administrasi']))
                 <a href="{{ route('admin.bookings.create') }}" class="btn btn-primary">
                     <i class="fa fa-plus"></i> Tambah Booking
                 </a>
+                @endif
             </div>
         </div>
     </div>
@@ -38,7 +40,9 @@
                                         <th>Payment Type</th>
                                         <th>Transaction ID</th>
                                         <th>Paid At</th>
+                                        @if(in_array(auth()->user()->role, ['administrator', 'administrasi', 'bendahara']))
                                         <th>Action</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -84,14 +88,19 @@
                                         <td>{{ $booking->transaction_id ?? '-' }}</td>
                                         <td>{{ $booking->paid_at ? \Carbon\Carbon::parse($booking->paid_at)->format('d M Y H:i') : '-' }}</td>
                                         <td>
+                                            @if(in_array(auth()->user()->role, ['administrator', 'administrasi', 'bendahara']))
                                             <a href="{{ route('admin.bookings.edit', $booking->id) }}" class="btn btn-sm btn-warning">
                                                 <i class="fa fa-edit"></i>
                                             </a>
+                                            @endif
+
+                                            @if(in_array(auth()->user()->role, ['administrator', 'administrasi']))
                                             <form onclick="return confirm('are you sure ?');" class="d-inline-block" action="{{ route('admin.bookings.destroy', [$booking]) }}" method="post">
                                                 @csrf
                                                 @method('delete')
                                                 <button class="btn btn-sm btn-danger"> <i class="fa fa-trash"></i> </button>
                                             </form>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach
