@@ -59,17 +59,20 @@
             </div>
 
             <!-- theme -->
-            <i class="bx bx-moon change-theme" id="theme-button"></i>
+             <!-- dark mode -->
+            <!-- <i class="bx bx-moon change-theme" id="theme-button"></i> -->
 
             <!-- <a target="_blank" href="https://api.whatsapp.com/send?phone=088111444&text=I want to booking" class="button nav__button">Booking Now</a> -->
             @auth
-            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+            <form action="{{ route('logout') }}" method="POST" style="display: inline; margin-left: 24px;">
                 @csrf
                 <button type="submit" class="button nav__button nav__button--small">Logout</button>
             </form>
             @else
-            <a href="{{ route('login') }}" class="button nav__button nav__button--small">Login</a>
+            <a href="{{ route('login') }}" class="button nav__button nav__button--small" style="margin-left: 24px;">Login</a>
             @endauth
+
+
 
         </nav>
     </header>

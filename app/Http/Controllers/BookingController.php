@@ -21,6 +21,14 @@ class BookingController extends Controller
 
     public function store(BookingRequest $request)
     {
+        // Validasi reCAPTCHA
+        $request->validate([
+            'g-recaptcha-response' => 'required|captcha',
+        ], [
+            'g-recaptcha-response.required' => 'Captcha harus diisi.',
+            'g-recaptcha-response.captcha' => 'Captcha tidak valid.',
+        ]);
+        
         // Simpan file KTP ke dalam storage
         $ktpPath = $request->hasFile('ktp')
             ? $request->file('ktp')->store('ktp_uploads', 'public')
@@ -46,16 +54,23 @@ class BookingController extends Controller
         $booking->save(); // Simpan booking untuk mendapatkan ID
 
         // Buat Snap URL Midtrans dan dapatkan order_id dari service
-        $midtransResult = $this->midtrans->createTransaction($booking);
-        $snapUrl = $midtransResult['snap_url'];
-        $orderId = $midtransResult['order_id'];
+        // $midtransResult = $this->midtrans->createTransaction($booking);
+        // $snapUrl = $midtransResult['snap_url'];
+        // $orderId = $midtransResult['order_id'];
 
-        // Update model booking dengan order_id dari Midtrans
-        $booking->order_id = $orderId;
-        $booking->save();
+        // // Update model booking dengan order_id dari Midtrans
+        // $booking->order_id = $orderId;
+        // $booking->save();
 
-        Log::info('Order ID yang Dibuat dan Disimpan:', ['order_id' => $booking->order_id, 'booking_id' => $booking->id]);
+        // Log::info('Order ID yang Dibuat dan Disimpan:', ['order_id' => $booking->order_id, 'booking_id' => $booking->id]);
 
-        return redirect($snapUrl);
+        // return redirect($snapUrl);
+
+        $waNumber = '6281317267693'; // Ganti dengan nomor WA bisnis kamu
+        $package = $booking->travel_package->type ?? 'Paket Umrah'; // asumsi relasi ada
+
+        $waMessage = urlencode("Halo Admin, saya ingin booking paket umrah:\n\nNama: {$booking->name}\nNo HP: {$booking->number_phone}\nEmail: {$booking->email}\nPaket: {$package}");
+
+        return redirect()->away("https://wa.me/{$waNumber}?text={$waMessage}");
     }
 }

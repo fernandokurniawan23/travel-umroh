@@ -29,6 +29,7 @@ class BookingRequest extends FormRequest
             'ktp' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'paspor' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Tambahkan validasi paspor (opsional)
             'travel_package_id' => 'required',
+            'g-recaptcha-response' => 'required|captcha',
         ];
     }
 }

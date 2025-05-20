@@ -426,7 +426,8 @@ body.dark-theme {
 }
 
 .popular__card {
-    width: 290px;
+    width: 100%;
+    max-width: 290px;
     background-color: var(--container-color);
     padding: 0.5rem 0.5rem 1.5rem;
     border-radius: 1rem;
@@ -440,8 +441,8 @@ body.dark-theme {
 }
 
 .popular__all {
-    display: -ms-grid;
     display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
 }
 
@@ -1432,5 +1433,137 @@ body.dark-theme {
         width: 55px;
         height: 55px;
     }
+}
+
+.custom-shape-divider-bottom-1747564518 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1747564518 svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 150px;
+}
+
+.custom-shape-divider-bottom-1747564518 .shape-fill {
+    fill: #FFFFFF;
+}
+
+/* Latar belakang untuk bagian Popular Package */
+#popular {
+    background-color: #84b2c7;
+}
+
+.custom-shape-divider-top-1747485904 {
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.custom-shape-divider-top-1747485904 svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 150px;
+    transform: rotateY(180deg);
+}
+
+.custom-shape-divider-top-1747485904 .shape-fill {
+    fill: #84b2c7;
+}
+
+/* Latar belakang untuk bagian Why Choose Us */
+#value {
+    background-color: #A8D5E3;
+    /* Pastikan ini ada */
+    margin-top: 0;
+    /* Pastikan margin atas diatur ke 0 */
+    padding-top: 0;
+    /* Atur padding atas ke 0 untuk sementara */
+}
+
+.value__description {
+    color: #fff;
+}
+
+/*bagian Our Blog */
+.custom-shape-divider-top-1747487905 {
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.custom-shape-divider-top-1747487905 svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 150px;
+    transform: rotateY(180deg);
+}
+
+.custom-shape-divider-top-1747487905 .shape-fill {
+    fill: #A8D5E3;
+}
+
+/* footer */
+.footer__container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    /* Atau konfigurasi grid Anda saat ini */
+    gap: 2rem;
+    /* Atau gap Anda saat ini */
+    align-items: start;
+    /* Coba 'start' dulu */
+}
+
+.footer {
+    background-color: #2a2d30;
+    color: #fff;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.footer__title,
+.footer__link,
+.footer__description,
+.footer__copy,
+.footer__privacy a {
+    color: #fff;
+    /* Pastikan semua teks berwarna putih */
+}
+
+.footer__social-link {
+    color: #fff;
+    /* Warna ikon sosial media */
+}
+
+.package-travel-page {
+    background-color: #fff;
+    /* Atau warna lain yang Anda inginkan */
+}
+
+.custom-shape-divider-top-1747485905 {
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.custom-shape-divider-top-1747485905 svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 150px;
+    transform: rotateY(180deg);
+}
+
+.custom-shape-divider-top-1747485905 .shape-fill {
+    fill: #fff;
 }
 /*# sourceMappingURL=style.css.map */

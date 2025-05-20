@@ -67,7 +67,7 @@
                             <div class="form-group row border-bottom pb-4">
                                 <label for="name" class="col-sm-2 col-form-label">Name</label>
                                 <div class="col-sm-10">
-                                <input type="text" class="form-control" name="name" value="{{ old('name') }}" id="name" placeholder="example: Kuta">
+                                <input type="text" class="form-control" name="name" value="{{ old('name') }}" id="name" placeholder="example: umroh juli">
                                 </div>
                             </div>
                            
@@ -89,19 +89,19 @@
                             <div class="form-group row border-bottom pb-4">
                                 <label for="type" class="col-sm-2 col-form-label">Type</label>
                                 <div class="col-sm-10">
-                                <input type="text" class="form-control" name="type" value="{{ old('type', $travel_package->type) }}" id="type" placeholder="example: 4D5N">
+                                <input type="text" class="form-control" name="type" value="{{ old('type', $travel_package->type) }}" id="type" placeholder="example: Paket Umroh ALL IN">
                                 </div>
                             </div>
                             <div class="form-group row border-bottom pb-4">
                                 <label for="Location" class="col-sm-2 col-form-label">Location</label>
                                 <div class="col-sm-10">
-                                <input text="text" class="form-control" id="Location" name="location" value="{{ old('location', $travel_package->location) }}" placeholder="example: Bali, Indonesia">
+                                <input text="text" class="form-control" id="Location" name="location" value="{{ old('location', $travel_package->location) }}" placeholder="example: Soetaa, CGK">
                                 </div>
                             </div>
                             <div class="form-group row border-bottom pb-4">
                                 <label for="price" class="col-sm-2 col-form-label">Price</label>
                                 <div class="col-sm-10">
-                                <input text="number" class="form-control" id="price" name="price" value="{{ old('price', $travel_package->price) }}" placeholder="example: 300">
+                                <input text="number" class="form-control" id="price" name="price" value="{{ old('price', $travel_package->price) }}" placeholder="example: 28000000">
                                 </div>
                             </div>
                             <div class="form-group row border-bottom pb-4">

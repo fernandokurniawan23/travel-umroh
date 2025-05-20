@@ -8,21 +8,10 @@
       @foreach($travel_package->galleries as $gallery)
       <div class="swiper-slide feature">
         <img src="{{ Storage::url($gallery->images) }}" alt="{{ $gallery->name }}" class="feature__bg" />
-        <div class="feature__container container">
-          <!-- <div class="feature__data">
-            <h2 class="feature__subtitle">Explore</h2>
-            <h1 class="feature__title">{{ $gallery->name }}</h1>
-          </div> -->
-        </div>
+        <div class="feature__container container"></div>
       </div>
       @endforeach
     </div>
-
-    <!-- Swiper navigation buttons
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div> -->
-
-    <!-- Optional: Pagination -->
     <div class="swiper-pagination"></div>
   </div>
 </section>
@@ -41,12 +30,23 @@
           Belum punya KTP/paspor atau ragu upload? Kolom bisa dikosongkan. Nantinya Admin akan hubungi Anda untuk lengkapi data.
         </p>
         <div class="card">
-          <form action="{{ route('booking.store') }}" method="post" enctype="multipart/form-data">
+          <form id="bookingForm" action="{{ route('booking.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="travel_package_id" value="{{ $travel_package->id }}">
             <input type="text" name="name" placeholder="Your Name" required {{ Auth::check() ? '' : 'disabled' }} />
+            @error('name')
+              <small class="text-danger d-block mt-1">{{ $message }}</small>
+            @enderror
+
             <input type="email" name="email" placeholder="Your Email" required {{ Auth::check() ? '' : 'disabled' }} />
+            @error('email')
+              <small class="text-danger d-block mt-1">{{ $message }}</small>
+            @enderror
+
             <input type="number" name="number_phone" placeholder="Your Number" required {{ Auth::check() ? '' : 'disabled' }} />
+            @error('number_phone')
+              <small class="text-danger d-block mt-1">{{ $message }}</small>
+            @enderror
 
             <div class="ktp-file">
               <label for="ktp" class="ktp-file-label">Your KTP (Opsional)</label>
@@ -56,6 +56,15 @@
             <div class="paspor-file">
               <label for="paspor" class="paspor-file-label">Your Passport (Opsional)</label>
               <input type="file" class="paspor-file-input" id="paspor" name="paspor" accept="image/*" {{ Auth::check() ? '' : 'disabled' }} />
+            </div>
+
+            {{-- reCAPTCHA --}}
+            <div class="form-group mt-3">
+              {!! NoCaptcha::display() !!}
+              @error('g-recaptcha-response')
+                <small class="text-danger d-block mt-1">{{ $message }}</small>
+              @enderror
+              <small id="recaptcha-error" class="text-danger d-block mt-1" style="display: none;"></small>
             </div>
 
             <button type="submit" class="button button-booking" {{ Auth::check() ? '' : 'disabled' }}>Send</button>
@@ -71,6 +80,12 @@
     </div>
   </div>
 </section>
+
+<div class="custom-shape-divider-top-1747485905" style="background-color: #84b2c7;">
+  <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill" fill="#E0F3F9"></path>
+  </svg>
+</div>
 
 <!-- Section: Travel package lainnya -->
 <section class="section" id="popular">
@@ -104,12 +119,9 @@
 @endsection
 
 @push('style-alt')
-<!-- Swiper CSS -->
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-
 <style>
-  .swiper-button-next,
-  .swiper-button-prev {
+  .swiper-button-next, .swiper-button-prev {
     color: #000;
     top: 50%;
     transform: translateY(-50%);
@@ -141,7 +153,6 @@
     justify-content: center;
     align-items: center;
     height: 500px;
-    position: relative;
     background-color: #f9f9f9;
   }
 
@@ -150,26 +161,6 @@
     max-width: 100%;
     object-fit: contain;
     margin: auto;
-  }
-
-  .feature__data {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-  }
-
-  .feature__title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #000;
-  }
-
-  .feature__subtitle {
-    font-size: 1rem;
-    font-weight: 500;
-    color: #000;
   }
 
   .alert {
@@ -199,31 +190,65 @@
 @endpush
 
 @push('script-alt')
-<!-- Swiper JS -->
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script>
-  const galleryTop = new Swiper('.gallery-top', {
-    effect: 'slide',
-    loop: true,
-    slidesPerView: 1,
-    spaceBetween: 10,
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-    },
-    // navigation: {
-    //   nextEl: '.swiper-button-next',
-    //   prevEl: '.swiper-button-prev',
-    // },
-  });
-
-  // Alert close
-  const close = document.getElementById('close');
-  const alert = document.getElementById('alert');
-  if (close) {
-    close.addEventListener('click', function() {
-      alert.style.display = 'none';
+    const galleryTop = new Swiper('.gallery-top', {
+        effect: 'slide',
+        loop: true,
+        slidesPerView: 1,
+        spaceBetween: 10,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
     });
-  }
+
+    const close = document.getElementById('close');
+    const alert = document.getElementById('alert');
+    if (close) {
+        close.addEventListener('click', function () {
+            alert.style.display = 'none';
+        });
+    }
 </script>
+
+{!! NoCaptcha::renderJs() !!}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('bookingForm');
+    const errorContainer = document.getElementById('recaptcha-error');
+
+    form.addEventListener('submit', function(e) {
+        if (typeof grecaptcha !== 'undefined') {
+            var response = grecaptcha.getResponse();
+            if (response.length === 0) {
+                e.preventDefault();
+                if (errorContainer) {
+                    errorContainer.innerText = '⚠️ Captcha belum diisi.';
+                    errorContainer.style.display = 'block';
+                    errorContainer.style.color = 'red';
+                    errorContainer.style.fontWeight = 'bold';
+
+                }
+            } else {
+                // Hapus error jika user sudah mengisi captcha
+                if (errorContainer) {
+                    errorContainer.innerText = '';
+                    errorContainer.style.display = 'none';
+                }
+            }
+        } else {
+            e.preventDefault();
+            if (errorContainer) {
+                errorContainer.innerText = '⚠️ Captcha belum siap. Silakan coba lagi.';
+                errorContainer.style.display = 'block';
+                errorContainer.style.color = 'red';
+                errorContainer.style.fontWeight = 'bold';
+
+            }
+        }
+    });
+});
+</script>
+
 @endpush

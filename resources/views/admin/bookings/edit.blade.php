@@ -52,7 +52,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="paspor">Paspor (opsional)</label>
+                                    <label for="paspor">Paspor</label>
                                     <input type="file" class="form-control" id="paspor" name="paspor">
                                     @if ($booking->paspor)
                                     <small class="form-text text-muted">File Paspor saat ini: <a href="{{ Storage::url($booking->paspor) }}" target="_blank">Lihat</a></small>
