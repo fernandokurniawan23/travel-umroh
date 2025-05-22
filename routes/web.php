@@ -14,7 +14,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TravelPackageController as PublicTravelPackageController;
 use App\Http\Controllers\BlogController as PublicBlogController;
 use App\Http\Controllers\BookingController as PublicBookingController;
-use App\Http\Controllers\PaymentController;
+// use App\Http\Controllers\PaymentController as MidtransPaymentController;
+use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\ProfileController as PublicProfileController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,7 +50,7 @@ Route::get('contact', fn() => view('contact'))->name('contact');
 Route::post('booking', [PublicBookingController::class, 'store'])->name('booking.store')->middleware('auth');
 
 // Pembayaran Midtrans Sukses
-Route::get('/payment/success', [PaymentController::class, 'success']);
+// Route::get('/payment/success', [MidtransPaymentController::class, 'success']);
 
 Auth::routes(['register' => true]);
 
@@ -91,12 +93,34 @@ Route::middleware(['auth', 'role:administrator'])
     });
 
 // Booking:
-// Booking:
 // Semua role bisa lihat daftar booking
 Route::middleware(['auth', 'role:administrator,administrasi,ketua,sekretaris,bendahara'])
     ->prefix('admin')->as('admin.')
     ->group(function () {
         Route::get('bookings', [BookingController::class, 'index'])->name('bookings.index');
+    });
+
+//payment
+Route::middleware(['auth', 'role:administrator,administrasi,ketua,sekretaris,bendahara'])
+    ->prefix('admin')->as('admin.')
+    ->group(function () {
+        Route::get('payments', [\App\Http\Controllers\Admin\PaymentController::class, 'index'])->name('payments.index');
+        Route::get('bookings/{booking}/payments', [\App\Http\Controllers\Admin\PaymentController::class, 'getBookingPayments'])->name('bookings.payments');
+        Route::get('bookings/{booking}/details', [\App\Http\Controllers\Admin\PaymentController::class, 'getBookingDetails'])->name('bookings.details');
+    });
+
+Route::middleware(['auth', 'role:administrator,administrasi'])
+    ->prefix('admin')->as('admin.')
+    ->group(function () {
+        Route::resource('payments', \App\Http\Controllers\Admin\PaymentController::class)->except(['index']);
+    });
+
+Route::middleware(['auth', 'role:administrator,administrasi,bendahara'])
+    ->prefix('admin')->as('admin.')
+    ->group(function () {
+        Route::get('payments/{payment}/edit', [\App\Http\Controllers\Admin\PaymentController::class, 'edit'])->name('payments.edit');
+        Route::put('payments/{payment}', [\App\Http\Controllers\Admin\PaymentController::class, 'update'])->name('payments.update');
+        Route::patch('payments/{payment}', [\App\Http\Controllers\Admin\PaymentController::class, 'update']); // Optional untuk payments
     });
 
 // administrator & administrasi full akses (tanpa index)
@@ -107,6 +131,7 @@ Route::middleware(['auth', 'role:administrator,administrasi'])
         Route::post('bookings', [BookingController::class, 'store'])->name('bookings.store');
         Route::get('bookings/{booking}', [BookingController::class, 'show'])->name('bookings.show');
         Route::delete('bookings/{booking}', [BookingController::class, 'destroy'])->name('bookings.destroy');
+        Route::get('bookings/{booking}/details', [PaymentController::class, 'getBookingDetails'])->name('bookings.details');
     });
 
 // administrator, administrasi, bendahara bisa edit dan update
@@ -140,16 +165,23 @@ Route::middleware(['auth', 'role:administrator'])
 Route::middleware(['auth', 'role:ketua,administrator,administrasi'])
     ->prefix('admin')->as('admin.')
     ->group(function () {
-        Route::resource('categories', CategoryController::class)->only(['index', 'show']);
-        Route::resource('blogs', BlogController::class)->only(['index', 'show']);
+        Route::resource('categories', CategoryController::class)->only(['index']);
+        Route::resource('blogs', BlogController::class)->only(['index']);
+        // Rute untuk menampilkan gambar blog (mungkin index jika diperlukan di masa depan)
+        Route::resource('blogs.images', \App\Http\Controllers\Admin\BlogImageController::class)->only(['index']);
     });
 
 // Administrator - full access
 Route::middleware(['auth', 'role:administrator,administrasi'])
     ->prefix('admin')->as('admin.')
     ->group(function () {
+        // ... route lainnya ...
         Route::resource('categories', CategoryController::class)->except(['index', 'show']);;
         Route::resource('blogs', BlogController::class)->except(['index', 'show']);;
+        // Rute untuk menyimpan gambar blog
+        Route::post('blogs/{blog}/images', [\App\Http\Controllers\Admin\BlogImageController::class, 'store'])->name('blogs.images.store');
+        // Rute untuk menghapus gambar blog
+        Route::delete('blogs/{blog}/images/{blog_image}', [\App\Http\Controllers\Admin\BlogImageController::class, 'destroy'])->name('blogs.images.destroy');
     });
 
 
@@ -160,3 +192,9 @@ Route::middleware(['auth', 'role:administrator,ketua,sekretaris,bendahara,admini
         Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
         Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
     });
+
+// Profile dan Histori Pembayaran (untuk user yang login)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [\App\Http\Controllers\PublicProfileController::class, 'show'])->name('user.profile.show');
+    Route::get('/profile/payments', [\App\Http\Controllers\PublicProfileController::class, 'paymentHistory'])->name('user.profile.payments');
+});

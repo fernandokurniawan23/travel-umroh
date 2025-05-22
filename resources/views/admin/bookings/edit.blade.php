@@ -71,32 +71,9 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="payment_status">Status Pembayaran</label>
-                                    <input type="text" class="form-control" id="payment_status" name="payment_status" value="{{ old('payment_status', $booking->payment_status) }}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="amount_paid">Jumlah Dibayar</label>
-                                    <input type="number" class="form-control" id="amount_paid" name="amount_paid" value="{{ old('amount_paid', $booking->amount_paid) }}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="remaining_balance">Sisa Pembayaran</label>
-                                    <input type="number" class="form-control" id="remaining_balance" name="remaining_balance" value="{{ old('remaining_balance', $booking->remaining_balance) }}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="payment_method">Metode Pembayaran</label>
-                                    <input type="text" class="form-control" id="payment_method" name="payment_method" value="{{ old('payment_method', $booking->payment_method) }}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="payment_type">Tipe Pembayaran</label>
-                                    <input type="text" class="form-control" id="payment_type" name="payment_type" value="{{ old('payment_type', $booking->payment_type) }}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="transaction_id">ID Transaksi</label>
-                                    <input type="text" class="form-control" id="transaction_id" name="transaction_id" value="{{ old('transaction_id', $booking->transaction_id) }}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="paid_at">Tanggal Pembayaran</label>
-                                    <input type="date" class="form-control" id="paid_at" name="paid_at" value="{{ old('paid_at', $booking->paid_at ? \Carbon\Carbon::parse($booking->paid_at)->format('Y-m-d') : '') }}">
+                                    <label for="description">Keterangan</label>
+                                    <textarea class="form-control" id="description" name="description" rows="2">{{ old('description', $booking->description) }}</textarea>
+                                    <small class="form-text text-muted">Contoh: Cicilan ke-2 atas nama Ibu Siti dan anaknya</small>
                                 </div>
                             </div>
                         </div>

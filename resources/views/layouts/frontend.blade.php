@@ -55,6 +55,15 @@
                             <span>Contact</span>
                         </a>
                     </li>
+                    @auth
+                    <li class="nav__item">
+                        <a href="{{ route('user.profile.payments') }}" class="nav__link {{ request()->is('profile/payments') ? ' active-link' : '' }}">
+                            <i class='bx bx-history'></i>
+                            <span>Payments</span>
+                        </a>
+                    </li>
+                    @endauth
+
                 </ul>
             </div>
 
@@ -165,7 +174,7 @@
 
         <div class="footer__info container">
             <span class="footer__copy">
-                &#169; Fernando Kurniawan. All rigths reserved
+                &copy; {{ date('Y') }} Haromain Travel. All rights reserved.
             </span>
             <div class="footer__privacy">
                 <a href="#">Terms & Agreements</a>

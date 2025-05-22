@@ -21,14 +21,7 @@ class Booking extends Model
         'travel_package_id',
         'user_id',
         'order_id',
-        'payment_status',
-        'payment_method',
-        'payment_type',
-        'transaction_id',
-        // 'payment_token',
-        'paid_at',
-        'amount_paid',
-        'remaining_balance',
+        'description',
     ];
 
 
@@ -42,4 +35,12 @@ class Booking extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    //relasi ke payments
+    public function payments()
+{
+    return $this->hasMany(Payment::class);
 }
+
+}
+

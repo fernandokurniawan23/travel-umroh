@@ -8,27 +8,18 @@ use App\Http\Controllers\Controller;
 
 class BookingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $bookings = Booking::with('travel_package')->orderByDesc('created_at')->paginate(10);
         return view('admin.bookings.index', compact('bookings'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $travelPackages = \App\Models\TravelPackage::all();
         return view('admin.bookings.create', compact('travelPackages'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -39,13 +30,6 @@ class BookingController extends Controller
             'ktp' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'paspor' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'vaccine_document' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
-            'payment_status' => 'nullable|string|max:50',
-            'amount_paid' => 'nullable|numeric',
-            'remaining_balance' => 'nullable|numeric',
-            'payment_method' => 'nullable|string|max:50',
-            'payment_type' => 'nullable|string|max:50',
-            'transaction_id' => 'nullable|string|max:255',
-            'paid_at' => 'nullable|date',
         ]);
 
         $data = $request->all();
@@ -64,35 +48,26 @@ class BookingController extends Controller
 
         $data['user_id'] = auth()->id();
 
-        // Buat booking terlebih dahulu untuk mendapatkan ID
         $booking = Booking::create($data);
 
-        // Format order_id
+        // Generate order_id
         $orderId = 'MNL-' . $booking->id . '-' . now()->format('YmdHi');
         $booking->update(['order_id' => $orderId]);
 
         return redirect()->route('admin.bookings.index')->with('success', 'Booking berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Booking $booking)
     {
         $travelPackages = \App\Models\TravelPackage::all();
         return view('admin.bookings.edit', compact('booking', 'travelPackages'));
     }
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, Booking $booking)
     {
         $request->validate([
@@ -103,13 +78,8 @@ class BookingController extends Controller
             'ktp' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'paspor' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'vaccine_document' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
-            'payment_status' => 'nullable|string|max:50',
-            'amount_paid' => 'nullable|numeric',
-            'remaining_balance' => 'nullable|numeric',
-            'payment_method' => 'nullable|string|max:50',
-            'payment_type' => 'nullable|string|max:50',
-            'transaction_id' => 'nullable|string|max:255',
-            'paid_at' => 'nullable|date',
+            'description' => 'nullable|string|max:500',
+
         ]);
 
         $data = $request->all();
@@ -140,9 +110,6 @@ class BookingController extends Controller
         return redirect()->route('admin.bookings.index')->with('success', 'Booking berhasil diperbarui.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Booking $booking)
     {
         $booking->delete();

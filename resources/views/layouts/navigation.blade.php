@@ -37,6 +37,17 @@
                 </a>
             </li>
 
+            <!-- Pembayaran (administrator, administrasi, bendahara bisa lihat) -->
+            @if(in_array(Auth::user()->role, ['administrator', 'administrasi', 'bendahara']))
+            <li class="nav-item">
+                <a href="{{ route('admin.payments.index') }}" class="nav-link">
+                    <i class="nav-icon fas fa-money-bill-wave"></i>
+                    <p>{{ __('Pembayaran') }}</p>
+                </a>
+            </li>
+            @endif
+
+
             <!-- Travel Package (Admin, ketua, sekretaris) -->
             @if(in_array(Auth::user()->role, ['administrator', 'ketua', 'sekretaris']))
             <li class="nav-item">

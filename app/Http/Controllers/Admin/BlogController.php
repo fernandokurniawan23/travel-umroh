@@ -38,19 +38,31 @@ class BlogController extends Controller
     public function store(BlogRequest $request)
     {
         if ($request->validated()) {
-            $image = $request->file('image')->store(
-                'blog/images',
-                'public'
-            );
-            $slug = Str::slug($request->title, '-');
+            $imageData = ['slug' => Str::slug($request->title, '-'), 'image' => null]; // Inisialisasi dengan null
 
-            Blog::create($request->except('image') + ['slug' => $slug, 'image' => $image]);
+            // Simpan featured image jika ada
+            if ($request->hasFile('image')) {
+                $imagePath = $request->file('image')->store('blog/images', 'public');
+                $imageData['image'] = $imagePath;
+            }
+
+            $blog = Blog::create($request->except('image', 'images') + $imageData);
+
+            // Simpan gambar galeri jika ada
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $image) {
+                    $path = $image->store('blog/images/galleries', 'public');
+                    $blog->blogImages()->create(['image_path' => $path]);
+                }
+            }
+
+            return redirect()->route('admin.blogs.index')->with([
+                'message' => 'Success Created !',
+                'alert-type' => 'success'
+            ]);
         }
 
-        return redirect()->route('admin.blogs.index')->with([
-            'message' => 'Success Created !',
-            'alert-type' => 'success'
-        ]);
+        return redirect()->back()->withInput()->withErrors($request->validator);
     }
 
     /**
@@ -67,7 +79,7 @@ class BlogController extends Controller
     public function edit(Blog $blog)
     {
         $categories = Category::get(['name', 'id']);
-
+        $blog->load('category', 'blogImages'); // Tambahkan ini
         return view('admin.blogs.edit', compact('blog', 'categories'));
     }
 

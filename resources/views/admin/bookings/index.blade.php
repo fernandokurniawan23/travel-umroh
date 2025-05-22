@@ -33,13 +33,7 @@
                                         <th>Paspor</th>
                                         <th>Vaksin</th>
                                         <th>Travel Package</th>
-                                        <th>Payment Status</th>
-                                        <th>Amount Paid</th>
-                                        <th>Remaining Balance</th>
-                                        <th>Payment Method</th>
-                                        <th>Payment Type</th>
-                                        <th>Transaction ID</th>
-                                        <th>Paid At</th>
+                                        <th>Description</th>
                                         @if(in_array(auth()->user()->role, ['administrator', 'administrasi', 'bendahara']))
                                         <th>Action</th>
                                         @endif
@@ -80,13 +74,13 @@
                                             @endif
                                         </td>
                                         <td>{{ $booking->travel_package->type }}</td>
-                                        <td>{{ $booking->payment_status ?? '-' }}</td>
-                                        <td>{{ $booking->amount_paid ?? '-' }}</td>
-                                        <td>{{ $booking->remaining_balance ?? '-' }}</td>
-                                        <td>{{ $booking->payment_method ?? '-' }}</td>
-                                        <td>{{ $booking->payment_type ?? '-' }}</td>
-                                        <td>{{ $booking->transaction_id ?? '-' }}</td>
-                                        <td>{{ $booking->paid_at ? \Carbon\Carbon::parse($booking->paid_at)->format('d M Y H:i') : '-' }}</td>
+                                        <td>
+                                            @if($booking->description)
+                                                <span class="badge bg-info">{{ $booking->description }}</span>
+                                            @else
+                                                <span class="text-muted">-</span>
+                                            @endif
+                                        </td>
                                         <td>
                                             @if(in_array(auth()->user()->role, ['administrator', 'administrasi', 'bendahara']))
                                             <a href="{{ route('admin.bookings.edit', $booking->id) }}" class="btn btn-sm btn-warning">
