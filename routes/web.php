@@ -109,7 +109,7 @@ Route::middleware(['auth', 'role:administrator,administrasi,ketua,sekretaris,ben
         Route::get('bookings/{booking}/details', [\App\Http\Controllers\Admin\PaymentController::class, 'getBookingDetails'])->name('bookings.details');
     });
 
-Route::middleware(['auth', 'role:administrator,administrasi'])
+Route::middleware(['auth', 'role:administrator,administrasi,bendahara'])
     ->prefix('admin')->as('admin.')
     ->group(function () {
         Route::resource('payments', \App\Http\Controllers\Admin\PaymentController::class)->except(['index']);

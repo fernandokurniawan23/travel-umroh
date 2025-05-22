@@ -9,15 +9,30 @@ use App\Http\Controllers\Controller;
 
 class PaymentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search');
         $payments = Payment::with('booking.travel_package')
-            ->orderBy('booking_id')
-            ->orderBy('payment_date')
-            ->paginate(10);
+            ->orderBy('payment_date', 'desc'); // Mengurutkan berdasarkan tanggal bayar dari yang terbaru
+
+        if ($search) {
+            $payments->where(function ($query) use ($search) {
+                $query->whereHas('booking', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%')
+                    ->orWhereHas('travel_package', function ($q2) use ($search) {
+                        $q2->where('type', 'like', '%' . $search . '%');
+                    });
+                })
+                ->orWhere('method', 'like', '%' . $search . '%')
+                ->orWhere('status', 'like', '%' . $search . '%')
+                ->orWhere('description', 'like', '%' . $search . '%');
+            });
+        }
+
+        $payments = $payments->paginate(10);
 
         $bookingTotalsPaid = [];
-
         foreach ($payments as $payment) {
             $bookingId = $payment->booking_id;
             $packagePrice = $payment->booking->travel_package->price ?? 0;

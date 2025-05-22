@@ -6,7 +6,17 @@
         <div class="row mb-2">
             <div class="col-sm-12 justify-content-between d-flex">
                 <h1 class="m-0">{{ __('Daftar Pembayaran') }}</h1>
-                @if(in_array(auth()->user()->role, ['administrator', 'bendahara']))
+                @if(in_array(auth()->user()->role, ['administrator', 'bendahara', 'administrasi']))
+                <div class="mb-3">
+                    <form action="{{ route('admin.payments.index') }}" method="GET">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="search" placeholder="nama, email, paket travel,metode,status">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="submit">Cari</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 <a href="{{ route('admin.payments.create') }}" class="btn btn-primary">
                     <i class="fa fa-plus"></i> Tambah Pembayaran
                 </a>
@@ -36,7 +46,7 @@
                                         <th>Keterangan</th>
                                         <th>Harga Paket</th>
                                         <th>Sisa Pembayaran</th> {{-- Sisa setelah pembayaran ini --}}
-                                        @if(in_array(auth()->user()->role, ['administrator', 'bendahara']))
+                                        @if(in_array(auth()->user()->role, ['administrator', 'bendahara', 'administrasi']))
                                         <th>Action</th>
                                         @endif
                                     </tr>
@@ -52,7 +62,7 @@
                                         <td>{{ ucfirst($payment->method) }}</td>
                                         <td>
                                             @if($payment->status === 'success')
-                                            <span class="badge bg-success">Lunas</span>
+                                            <span class="badge bg-success">success</span>
                                             @else
                                             <span class="badge bg-warning">{{ ucfirst($payment->status) }}</span>
                                             @endif
@@ -61,7 +71,7 @@
                                         <td>{{ $payment->description ?? '-' }}</td>
                                         <td>Rp. {{ number_format($payment->package_price ?? 0) }}</td>
                                         <td>Rp. {{ number_format($payment->remaining_payment_at_this ?? 0) }}</td>
-                                        @if(in_array(auth()->user()->role, ['administrator', 'bendahara']))
+                                        @if(in_array(auth()->user()->role, ['administrator', 'bendahara', 'administrasi']))
                                         <td>
                                             <a href="{{ route('admin.payments.edit', $payment->id) }}" class="btn btn-sm btn-warning">
                                                 <i class="fa fa-edit"></i>

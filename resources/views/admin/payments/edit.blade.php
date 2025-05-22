@@ -54,7 +54,7 @@
                             <label>Status Pembayaran</label>
                             <select name="status" class="form-control" required>
                                 <option value="pending" {{ old('status', $payment->status) === 'pending' ? 'selected' : '' }}>Pending</option>
-                                <option value="success" {{ old('status', $payment->status) === 'success' ? 'selected' : '' }}>Lunas</option>
+                                <option value="success" {{ old('status', $payment->status) === 'success' ? 'selected' : '' }}>Success</option>
                             </select>
                         </div>
 

@@ -60,7 +60,7 @@
         <div class="form-group">
             <label for="status">Status</label>
             <select name="status" class="form-control" required>
-                <option value="success">Lunas</option>
+                <option value="success">Success</option>
                 <option value="pending">Pending</option>
             </select>
         </div>

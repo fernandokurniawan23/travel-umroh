@@ -38,7 +38,7 @@
             </li>
 
             <!-- Pembayaran (administrator, administrasi, bendahara bisa lihat) -->
-            @if(in_array(Auth::user()->role, ['administrator', 'administrasi', 'bendahara']))
+            @if(in_array(Auth::user()->role, ['administrator', 'administrasi', 'bendahara', 'sekretaris', 'ketua']))
             <li class="nav-item">
                 <a href="{{ route('admin.payments.index') }}" class="nav-link">
                     <i class="nav-icon fas fa-money-bill-wave"></i>

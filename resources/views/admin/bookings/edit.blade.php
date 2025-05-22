@@ -73,7 +73,7 @@
                                 <div class="form-group">
                                     <label for="description">Keterangan</label>
                                     <textarea class="form-control" id="description" name="description" rows="2">{{ old('description', $booking->description) }}</textarea>
-                                    <small class="form-text text-muted">Contoh: Cicilan ke-2 atas nama Ibu Siti dan anaknya</small>
+                                    <small class="form-text text-muted">Contoh: Sudah menerima merchant,sudah lunas pembayaran</small>
                                 </div>
                             </div>
                         </div>

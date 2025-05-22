@@ -8,9 +8,22 @@ use App\Http\Controllers\Controller;
 
 class BookingController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $bookings = Booking::with('travel_package')->orderByDesc('created_at')->paginate(10);
+        $search = $request->input('search');
+        $bookings = Booking::with('travel_package')->orderByDesc('created_at');
+
+        if ($search) {
+            $bookings->where(function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%')
+                    ->orWhereHas('travel_package', function ($query) use ($search) {
+                        $query->where('type', 'like', '%' . $search . '%');
+                    });
+            });
+        }
+
+        $bookings = $bookings->paginate(10);
         return view('admin.bookings.index', compact('bookings'));
     }
 

@@ -7,6 +7,16 @@
             <div class="col-sm-12 justify-content-between d-flex">
                 <h1 class="m-0">{{ __('Booking') }}</h1>
                 @if(in_array(auth()->user()->role, ['administrator', 'administrasi']))
+                <div class="mb-3">
+                    <form action="{{ route('admin.bookings.index') }}" method="GET">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="search" placeholder="nama, email, paket travel">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="submit">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 <a href="{{ route('admin.bookings.create') }}" class="btn btn-primary">
                     <i class="fa fa-plus"></i> Tambah Booking
                 </a>
@@ -76,7 +86,7 @@
                                         <td>{{ $booking->travel_package->type }}</td>
                                         <td>
                                             @if($booking->description)
-                                                <span class="badge bg-info">{{ $booking->description }}</span>
+                                                <span>{{ $booking->description }}</span>
                                             @else
                                                 <span class="text-muted">-</span>
                                             @endif
