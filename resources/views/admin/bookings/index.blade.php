@@ -43,7 +43,9 @@
                                         <th>Paspor</th>
                                         <th>Vaksin</th>
                                         <th>Travel Package</th>
-                                        <th>Description</th>
+                                        <th>Status Penerimaan</th>
+                                        <th>Bukti Penerimaan</th>
+                                        <th>Konfirmasi User</th>
                                         @if(in_array(auth()->user()->role, ['administrator', 'administrasi', 'bendahara']))
                                         <th>Action</th>
                                         @endif
@@ -84,11 +86,20 @@
                                             @endif
                                         </td>
                                         <td>{{ $booking->travel_package->type }}</td>
-                                        <td>
-                                            @if($booking->description)
-                                                <span>{{ $booking->description }}</span>
+                                        <td>{{ $booking->receipt_status ?? '-' }}</td> <td>
+                                            @if($booking->receipt_confirmation)
+                                            <a href="{{ Storage::url($booking->receipt_confirmation) }}" target="_blank">
+                                                <i class="fa fa-file"></i> Lihat Bukti
+                                            </a>
                                             @else
-                                                <span class="text-muted">-</span>
+                                            <span class="text-muted">Belum ada</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($booking->user_receipt_confirmation)
+                                                <span class="text-success">Sudah</span>
+                                            @else
+                                                <span class="text-danger">Belum</span>
                                             @endif
                                         </td>
                                         <td>

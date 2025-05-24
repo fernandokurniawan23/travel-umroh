@@ -59,7 +59,7 @@
                     <li class="nav__item">
                         <a href="{{ route('user.profile.payments') }}" class="nav__link {{ request()->is('profile/payments') ? ' active-link' : '' }}">
                             <i class='bx bx-history'></i>
-                            <span>Payments</span>
+                            <span>History</span>
                         </a>
                     </li>
                     @endauth

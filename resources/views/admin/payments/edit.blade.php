@@ -32,12 +32,17 @@
 
                         <div class="form-group">
                             <label>Paket Travel</label>
-                            <input type="text" class="form-control" value="{{ $payment->booking->travel_package->title ?? '-' }}" readonly>
+                            <input type="text" class="form-control" value="{{ $payment->booking->travel_package->type ?? '-' }}" readonly>
                         </div>
 
                         <div class="form-group">
                             <label>Email Pemesan</label>
                             <input type="email" class="form-control" value="{{ $payment->booking->email ?? '-' }}" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Rincian</label>
+                            <input type="text" name="description" class="form-control" value="{{ old('description', $payment->description) }}">
                         </div>
 
                         <div class="form-group">
@@ -51,21 +56,16 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Status Pembayaran</label>
-                            <select name="status" class="form-control" required>
-                                <option value="pending" {{ old('status', $payment->status) === 'pending' ? 'selected' : '' }}>Pending</option>
-                                <option value="success" {{ old('status', $payment->status) === 'success' ? 'selected' : '' }}>Success</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
                             <label>Tanggal Pembayaran</label>
                             <input type="date" name="payment_date" class="form-control" value="{{ old('payment_date', $payment->payment_date instanceof \Carbon\Carbon ? $payment->payment_date->format('Y-m-d') : $payment->payment_date) }}">
                         </div>
 
                         <div class="form-group">
-                            <label>Keterangan</label>
-                            <input type="text" name="description" class="form-control" value="{{ old('description', $payment->description) }}">
+                            <label>Status Pembayaran</label>
+                            <select name="status" class="form-control" required>
+                                <option value="pending" {{ old('status', $payment->status) === 'pending' ? 'selected' : '' }}>Pending</option>
+                                <option value="success" {{ old('status', $payment->status) === 'success' ? 'selected' : '' }}>Success</option>
+                            </select>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Update Pembayaran</button>

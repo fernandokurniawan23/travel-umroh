@@ -48,8 +48,11 @@
         </div>
 
         <div class="form-group">
-            <label for="amount">Nominal Pembayaran Ini</label>
-            <input type="number" name="amount" id="amount" class="form-control" required>
+            <label for="description">Rincian</label>  <input type="text" name="description" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="amount">Nominal Pembayaran Ini</label>  <input type="number" name="amount" id="amount" class="form-control" required>
         </div>
 
         <div class="form-group">
@@ -68,11 +71,6 @@
         <div class="form-group">
             <label for="payment_date">Tanggal Bayar</label>
             <input type="date" name="payment_date" class="form-control" required>
-        </div>
-
-        <div class="form-group">
-            <label for="description">Keterangan</label>
-            <input type="text" name="description" class="form-control">
         </div>
 
         <button type="submit" class="btn btn-primary mt-3">Simpan</button>
@@ -136,11 +134,7 @@
         });
 
         amountInput.addEventListener('input', function() {
-            const paidSoFar = parseFloat(alreadyPaidInput.value.replace(/[^0-9.-]+/g,"")) || 0;
-            const packagePrice = parseFloat(travelPackagePriceInput.value.replace(/[^0-9.-]+/g,"")) || 0;
-            const currentPayment = parseFloat(this.value) || 0;
-            const remaining = packagePrice - (paidSoFar + currentPayment);
-            remainingPaymentInput.value = formatCurrency(remaining);
+            console.log("Sisa Pembayaran tidak dihitung otomatis.");
         });
 
         function formatCurrency(number) {

@@ -68,12 +68,33 @@
                                     </small>
                                     @endif
                                 </div>
-                            </div>
-                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="description">Keterangan</label>
-                                    <textarea class="form-control" id="description" name="description" rows="2">{{ old('description', $booking->description) }}</textarea>
-                                    <small class="form-text text-muted">Contoh: Sudah menerima merchant,sudah lunas pembayaran</small>
+                                    <label for="receipt_confirmation">Bukti Penerimaan Perlengkapan</label>
+                                    <input type="file" class="form-control" id="receipt_confirmation" name="receipt_confirmation" accept=".pdf,.jpg,.jpeg,.png">
+                                    @if ($booking->receipt_confirmation)
+                                        <small class="form-text text-muted">
+                                            File bukti saat ini:
+                                            <a href="{{ Storage::url($booking->receipt_confirmation) }}" target="_blank">Lihat</a>
+                                        </small>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="receipt_status">Status Penerimaan Perlengkapan</label>
+                                    <select class="form-control" id="receipt_status" name="receipt_status">
+                                        <option value="">Pilih Status</option>
+                                        <option value="menunggu" {{ old('receipt_status', $booking->receipt_status) == 'menunggu' ? 'selected' : '' }}>Menunggu</option>
+                                        <option value="dikirim" {{ old('receipt_status', $booking->receipt_status) == 'dikirim' ? 'selected' : '' }}>Dikirim</option>
+                                        <option value="diterima" {{ old('receipt_status', $booking->receipt_status) == 'diterima' ? 'selected' : '' }}>Diterima</option>
+                                        </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="user_receipt_confirmation">Konfirmasi Penerima oleh Admin</label>
+                                    <select class="form-control" id="user_receipt_confirmation" name="user_receipt_confirmation">
+                                        <option value="0" {{ old('user_receipt_confirmation', $booking->user_receipt_confirmation) == 0 ? 'selected' : '' }}>Belum Dikonfirmasi</option>
+                                        <option value="1" {{ old('user_receipt_confirmation', $booking->user_receipt_confirmation) == 1 ? 'selected' : '' }}>Sudah Dikonfirmasi</option>
+                                    </select>
+                                    <small class="form-text text-muted">Pilih status konfirmasi penerima oleh admin.</small>
                                 </div>
                             </div>
                         </div>

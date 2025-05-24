@@ -59,6 +59,10 @@ class BookingController extends Controller
             $data['vaccine_document'] = $request->file('vaccine_document')->store('uploads/vaccine_document', 'public');
         }
 
+        if ($request->hasFile('receipt_confirmation')) {
+            $data['receipt_confirmation'] = $request->file('receipt_confirmation')->store('uploads/bukti_penerimaan', 'public');
+        }
+
         $data['user_id'] = auth()->id();
 
         $booking = Booking::create($data);
@@ -92,7 +96,6 @@ class BookingController extends Controller
             'paspor' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'vaccine_document' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
             'description' => 'nullable|string|max:500',
-
         ]);
 
         $data = $request->all();
@@ -116,6 +119,13 @@ class BookingController extends Controller
                 \Illuminate\Support\Facades\Storage::delete('public/' . $booking->vaccine_document);
             }
             $data['vaccine_document'] = $request->file('vaccine_document')->store('uploads/vaccine_document', 'public');
+        }
+
+        if ($request->hasFile('receipt_confirmation')) {
+            if ($booking->receipt_confirmation) {
+                \Illuminate\Support\Facades\Storage::delete('public/' . $booking->receipt_confirmation);
+            }
+            $data['receipt_confirmation'] = $request->file('receipt_confirmation')->store('uploads/bukti_penerimaan', 'public');
         }
 
         $booking->update($data);

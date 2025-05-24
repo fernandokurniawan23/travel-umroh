@@ -146,16 +146,19 @@ Route::middleware(['auth', 'role:administrator,administrasi,bendahara'])
 
 // Travel Package:
 Route::middleware(['auth', 'role:administrator,ketua,sekretaris'])
-    ->prefix('admin')->as('admin.')
+    ->prefix('admin')->as('admin.')   // <-- Pastikan prefix dan as ada di sini juga
     ->group(function () {
         Route::resource('travel_packages', TravelPackageController::class)->only(['index']);
         Route::resource('travel_packages.galleries', \App\Http\Controllers\Admin\GalleryController::class)->only(['index']);
+
+        // Route detail menggunakan method show
+        Route::get('travel_packages/{travel_package}', [TravelPackageController::class, 'show'])->name('travel_packages.show');
     });
 
 Route::middleware(['auth', 'role:administrator'])
     ->prefix('admin')->as('admin.')
     ->group(function () {
-        Route::resource('travel_packages', TravelPackageController::class)->except(['index', 'show']);
+        Route::resource('travel_packages', TravelPackageController::class)->except(['index', 'show']); // Sekarang 'show' juga di-except
         Route::resource('travel_packages.galleries', \App\Http\Controllers\Admin\GalleryController::class)->except(['index', 'show']);
     });
 
@@ -167,7 +170,9 @@ Route::middleware(['auth', 'role:ketua,administrator,administrasi'])
     ->group(function () {
         Route::resource('categories', CategoryController::class)->only(['index']);
         Route::resource('blogs', BlogController::class)->only(['index']);
-        // Rute untuk menampilkan gambar blog (mungkin index jika diperlukan di masa depan)
+        // Rute detail
+        Route::get('blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show');
+        // Rute untuk menampilkan gambar blog
         Route::resource('blogs.images', \App\Http\Controllers\Admin\BlogImageController::class)->only(['index']);
     });
 
@@ -193,8 +198,9 @@ Route::middleware(['auth', 'role:administrator,ketua,sekretaris,bendahara,admini
         Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
     });
 
-// Profile dan Histori Pembayaran (untuk user yang login)
+// Profile dan Histori Pembayaran dan konfirmasi penerimaan perlengkapan (untuk user yang login)
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [\App\Http\Controllers\PublicProfileController::class, 'show'])->name('user.profile.show');
     Route::get('/profile/payments', [\App\Http\Controllers\PublicProfileController::class, 'paymentHistory'])->name('user.profile.payments');
+    Route::post('/profile/bookings/{booking}/received', [\App\Http\Controllers\PublicProfileController::class, 'markReceiptReceived'])->name('user.booking.markReceived');
 });

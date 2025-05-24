@@ -68,9 +68,10 @@ class BlogController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Blog $blog): View // Menggunakan Route Model Binding dan Type Hinting
     {
-        //
+        $blog->load('category', 'blogImages'); // Load relasi yang mungkin dibutuhkan di view detail
+        return view('blogs.show', compact('blog'));
     }
 
     /**

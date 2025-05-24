@@ -12,8 +12,8 @@
 
     <section class="gallery-blog section">
         <div class="container">
-            <h2 class="section__title" style="text-align: center; margin-bottom: 2rem;">Galeri Foto</h2>
             @if ($blog->blogImages->isNotEmpty())
+                <h2 class="section__title" style="text-align: center; margin-bottom: 2rem;">Galeri Foto</h2>
                 <div class="swiper gallerySwiper">
                     <div class="swiper-wrapper">
                         @foreach ($blog->blogImages as $blogImage)
@@ -28,8 +28,6 @@
                         <div class="swiper-pagination"></div>
                     @endif
                 </div>
-            @else
-                <p style="text-align: center;">Tidak ada gambar galeri untuk blog ini.</p>
             @endif
         </div>
     </section>

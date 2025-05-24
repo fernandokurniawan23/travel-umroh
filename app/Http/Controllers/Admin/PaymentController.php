@@ -6,6 +6,7 @@ use App\Models\Payment;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator; // Tambahkan ini
 
 class PaymentController extends Controller
 {
@@ -13,16 +14,16 @@ class PaymentController extends Controller
     {
         $search = $request->input('search');
         $payments = Payment::with('booking.travel_package')
-            ->orderBy('payment_date', 'desc'); // Mengurutkan berdasarkan tanggal bayar dari yang terbaru
+            ->orderBy('payment_date', 'desc');
 
         if ($search) {
             $payments->where(function ($query) use ($search) {
                 $query->whereHas('booking', function ($q) use ($search) {
                     $q->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('email', 'like', '%' . $search . '%')
-                    ->orWhereHas('travel_package', function ($q2) use ($search) {
-                        $q2->where('type', 'like', '%' . $search . '%');
-                    });
+                        ->orWhere('email', 'like', '%' . $search . '%')
+                        ->orWhereHas('travel_package', function ($q2) use ($search) {
+                            $q2->where('type', 'like', '%' . $search . '%');
+                        });
                 })
                 ->orWhere('method', 'like', '%' . $search . '%')
                 ->orWhere('status', 'like', '%' . $search . '%')
@@ -50,7 +51,7 @@ class PaymentController extends Controller
 
     public function create()
     {
-        $bookings = Booking::all();
+        $bookings = Booking::all(); // Atau Booking::with('travel_package')->get() jika perlu
         return view('admin.payments.create', compact('bookings'));
     }
 
@@ -60,7 +61,7 @@ class PaymentController extends Controller
             'booking_id' => 'required|exists:bookings,id',
             'amount' => 'required|numeric|min:0',
             'method' => 'required|string|max:255',
-            'status' => 'required|string|max:255',
+            'status' => 'required|string|max:255|in:pending,success', // Tambahkan in:pending,success
             'payment_date' => 'nullable|date',
             'description' => 'nullable|string|max:500',
         ]);
@@ -77,21 +78,29 @@ class PaymentController extends Controller
 
     public function edit(Payment $payment)
     {
-        $bookings = Booking::all();
+        // Eager load booking dan travel_package
+        $payment = Payment::with('booking.travel_package')->findOrFail($payment->id);
+        $bookings = Booking::all(); // Atau Booking::with('travel_package')->get() jika perlu
         return view('admin.payments.edit', compact('payment', 'bookings'));
     }
 
     public function update(Request $request, Payment $payment)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [ // Gunakan Validator
             'booking_id' => 'required|exists:bookings,id',
             'amount' => 'required|numeric|min:0',
             'method' => 'required|string|max:255',
-            'status' => 'required|string|max:255',
+            'status' => ['required', 'string', 'max:255', 'in:pending,success'], // Gunakan array untuk rules
             'payment_date' => 'nullable|date',
             'description' => 'nullable|string|max:500',
         ]);
 
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Eager load (meskipun mungkin tidak langsung diperlukan di sini)
+        $payment = Payment::with('booking.travel_package')->findOrFail($payment->id);
         $payment->update($request->all());
 
         return redirect()->route('admin.payments.index')->with('success', 'Pembayaran berhasil diperbarui.');

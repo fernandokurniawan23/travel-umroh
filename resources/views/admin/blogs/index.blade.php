@@ -6,7 +6,6 @@
     $canDelete = auth()->user()->role === 'administrator';
 @endphp
 
-<!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -21,9 +20,6 @@
         </div>
     </div>
 </div>
-<!-- /.content-header -->
-
-<!-- Main content -->
 <div class="content">
     <div class="container-fluid">
         <div class="row">
@@ -40,32 +36,34 @@
                                     <th>Image</th>
                                     <th>Excerpt</th>
                                     <th>Category</th>
-                                    @if($canCreateOrEdit)
-                                        <th>Action</th>
-                                    @endif
-                                </tr>
+                                    <th>Action</th> </tr>
                             </thead>
                             <tbody>
-                            @foreach($blogs as $blog)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $blog->title }}</td>
-                                    <td>
-                                        <a href="{{ Storage::url($blog->image) }}" target="_blank">
-                                            <img src="{{ Storage::url($blog->image) }}" width="100" alt="">
-                                        </a>
-                                    </td>
-                                    <td>{{ $blog->excerpt }}</td>
-                                    <td>{{ $blog->category->name }}</td>
-                                    @if($canCreateOrEdit)
+                                @foreach($blogs as $blog)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $blog->title }}</td>
                                         <td>
-                                            <a href="{{ route('admin.blogs.edit', [$blog]) }}" class="btn btn-sm btn-info">
-                                                <i class="fa fa-edit"></i>
+                                            <a href="{{ Storage::url($blog->image) }}" target="_blank">
+                                                <img src="{{ Storage::url($blog->image) }}" width="100" alt="">
                                             </a>
+                                        </td>
+                                        <td>{{ $blog->excerpt }}</td>
+                                        <td>{{ $blog->category->name }}</td>
+                                        <td>
+                                        <a href="{{ route('blog.show', $blog) }}" class="btn btn-sm btn-info" target="_blank">
+                                            <i class="fa fa-eye"></i> Detail
+                                        </a>
+
+                                            @if($canCreateOrEdit)
+                                                <a href="{{ route('admin.blogs.edit', $blog) }}" class="btn btn-sm btn-warning">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            @endif
 
                                             @if($canDelete)
-                                                <form onclick="return confirm('Are you sure?');" class="d-inline-block" action="{{ route('admin.blogs.destroy', [$blog]) }}" method="post">
-                                                    @csrf 
+                                                <form onclick="return confirm('Are you sure?');" class="d-inline-block" action="{{ route('admin.blogs.destroy', $blog) }}" method="post">
+                                                    @csrf
                                                     @method('delete')
                                                     <button class="btn btn-sm btn-danger">
                                                         <i class="fa fa-trash"></i>
@@ -73,14 +71,11 @@
                                                 </form>
                                             @endif
                                         </td>
-                                    @endif
-                                </tr>
-                            @endforeach
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
-                    <!-- /.card-body -->
-
                     <div class="card-footer clearfix">
                         {{ $blogs->links() }}
                     </div>
@@ -90,5 +85,4 @@
         </div>
     </div>
 </div>
-<!-- /.content -->
 @endsection

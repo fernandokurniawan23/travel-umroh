@@ -48,9 +48,9 @@ class TravelPackageController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(TravelPackage $travel_package)
     {
-        //
+        return view('travel_packages.show', compact('travel_package'));
     }
 
     /**

@@ -37,15 +37,15 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama</th>
-                                        <th>Paket Travel</th>
                                         <th>Email</th>
-                                        <th>Nominal</th>
-                                        <th>Metode</th>
-                                        <th>Status</th>
-                                        <th>Tanggal Bayar</th>
-                                        <th>Keterangan</th>
+                                        <th>Paket Travel</th>
                                         <th>Harga Paket</th>
-                                        <th>Sisa Pembayaran</th> {{-- Sisa setelah pembayaran ini --}}
+                                        <th>Rincian</th>
+                                        <th>Nominal</th>
+                                        <th>Sisa Bayar</th>
+                                        <th>Metode</th>
+                                        <th>Tanggal Bayar</th> {{-- Kolom "Tanggal Bayar" dipindahkan ke sini --}}
+                                        <th>Status</th>
                                         @if(in_array(auth()->user()->role, ['administrator', 'bendahara', 'administrasi']))
                                         <th>Action</th>
                                         @endif
@@ -56,10 +56,14 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $payment->booking->name ?? '-' }}</td>
-                                        <td>{{ $payment->booking->travel_package->type ?? '-' }}</td>
                                         <td>{{ $payment->booking->email ?? '-' }}</td>
-                                        <td>Rp{{ number_format($payment->amount, 0, ',', '.') }}</td>
+                                        <td>{{ $payment->booking->travel_package->type ?? '-' }}</td>
+                                        <td>Rp. {{ number_format($payment->package_price ?? 0) }}</td>
+                                        <td>{{ $payment->description ?? '-' }}</td>
+                                        <td>Rp. {{ number_format($payment->amount, 0, ',', '.') }}</td>
+                                        <td>Rp. {{ number_format($payment->remaining_payment_at_this ?? 0) }}</td>
                                         <td>{{ ucfirst($payment->method) }}</td>
+                                        <td>{{ $payment->payment_date ? \Carbon\Carbon::parse($payment->payment_date)->format('d-m-Y') : '-' }}</td> {{-- Kolom "Tanggal Bayar" dipindahkan ke sini --}}
                                         <td>
                                             @if($payment->status === 'success')
                                             <span class="badge bg-success">success</span>
@@ -67,10 +71,6 @@
                                             <span class="badge bg-warning">{{ ucfirst($payment->status) }}</span>
                                             @endif
                                         </td>
-                                        <td>{{ \Carbon\Carbon::parse($payment->payment_date)->format('d-m-Y') }}</td>
-                                        <td>{{ $payment->description ?? '-' }}</td>
-                                        <td>Rp. {{ number_format($payment->package_price ?? 0) }}</td>
-                                        <td>Rp. {{ number_format($payment->remaining_payment_at_this ?? 0) }}</td>
                                         @if(in_array(auth()->user()->role, ['administrator', 'bendahara', 'administrasi']))
                                         <td>
                                             <a href="{{ route('admin.payments.edit', $payment->id) }}" class="btn btn-sm btn-warning">
@@ -88,7 +88,7 @@
                                     </tr>
                                     @empty
                                     <tr>
-                                        <td colspan="11" class="text-center">Belum ada pembayaran</td>
+                                        <td colspan="12" class="text-center">Belum ada pembayaran</td>
                                     </tr>
                                     @endforelse
                                 </tbody>

@@ -12,12 +12,12 @@ use Illuminate\Support\Facades\Log; // Tambahkan import Log
 
 class BookingController extends Controller
 {
-    protected $midtrans;
+    // protected $midtrans;
 
-    public function __construct(MidtransService $midtrans)
-    {
-        $this->midtrans = $midtrans;
-    }
+    // public function __construct(MidtransService $midtrans)
+    // {
+    //     $this->midtrans = $midtrans;
+    // }
 
     public function store(BookingRequest $request)
     {
@@ -66,7 +66,7 @@ class BookingController extends Controller
 
         // return redirect($snapUrl);
 
-        $waNumber = '6281317267693'; // Ganti dengan nomor WA bisnis kamu
+        $waNumber = '6285798807867'; // Ganti dengan nomor WA bisnis kamu
         $package = $booking->travel_package->type ?? 'Paket Umrah'; // asumsi relasi ada
 
         $waMessage = urlencode("Halo Admin, saya ingin booking paket umrah:\n\nNama: {$booking->name}\nNo HP: {$booking->number_phone}\nEmail: {$booking->email}\nPaket: {$package}");

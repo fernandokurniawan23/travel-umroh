@@ -53,13 +53,27 @@
                                     <label for="vaccine_document">Dokumen Vaksin</label>
                                     <input type="file" class="form-control" id="vaccine_document" name="vaccine_document">
                                 </div>
+                                <div class="form-group">
+                                    <label for="receipt_confirmation">Bukti Penerimaan Perlengkapan</label>
+                                    <input type="file" class="form-control" id="receipt_confirmation" name="receipt_confirmation" accept=".pdf,.jpg,.jpeg,.png">
+                                </div>
+                                <div class="form-group">
+                                    <label for="receipt_status">Status Penerimaan Perlengkapan</label>
+                                    <select class="form-control" id="receipt_status" name="receipt_status">
+                                        <option value="">Pilih Status</option>
+                                        <option value="menunggu" {{ old('receipt_status') == 'menunggu' ? 'selected' : '' }}>Menunggu</option>
+                                        <option value="dikirim" {{ old('receipt_status') == 'dikirim' ? 'selected' : '' }}>Dikirim</option>
+                                        <option value="diterima" {{ old('receipt_status') == 'diterima' ? 'selected' : '' }}>Diterima</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Konfirmasi User</label>
+                                    <div>
+                                        <span class="text-muted">Status konfirmasi user akan muncul setelah booking dibuat.</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="description">Keterangan</label>
-                                    <textarea class="form-control" id="description" name="description" rows="2">{{ old('description') }}</textarea>
-                                    <small class="form-text text-muted">Contoh: Pembayaran DP untuk Bapak Ahmad dan keluarga</small>
-                                </div>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-success">Simpan</button>

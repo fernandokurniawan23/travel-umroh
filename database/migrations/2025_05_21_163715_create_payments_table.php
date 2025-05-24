@@ -15,7 +15,6 @@ return new class extends Migration
             $table->string('method'); // metode pembayaran: cash, transfer, dll
             $table->string('status')->default('paid'); // paid / pending (default paid)
             $table->timestamp('payment_date')->nullable(); // tanggal pembayaran
-            $table->text('description')->nullable(); // keterangan (misal cicilan ke-2)
             $table->timestamps();
         });
     }
