@@ -46,7 +46,7 @@
                                         <th>Status Penerimaan</th>
                                         <th>Bukti Penerimaan</th>
                                         <th>Konfirmasi User</th>
-                                        @if(in_array(auth()->user()->role, ['administrator', 'administrasi', 'bendahara']))
+                                        @if(in_array(auth()->user()->role, ['administrator', 'administrasi']))
                                         <th>Action</th>
                                         @endif
                                     </tr>
@@ -103,7 +103,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if(in_array(auth()->user()->role, ['administrator', 'administrasi', 'bendahara']))
+                                            @if(in_array(auth()->user()->role, ['administrator', 'administrasi']))
                                             <a href="{{ route('admin.bookings.edit', $booking->id) }}" class="btn btn-sm btn-warning">
                                                 <i class="fa fa-edit"></i>
                                             </a>

@@ -14,7 +14,6 @@
 <div class="content">
     <div class="container-fluid">
         <div class="row">
-            <!-- Total Users -->
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-primary">
                     <div class="inner">
@@ -27,7 +26,6 @@
                 </div>
             </div>
 
-            <!-- Total Travel Packages -->
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-info">
                     <div class="inner">
@@ -40,7 +38,6 @@
                 </div>
             </div>
 
-            <!-- Total Bookings -->
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-success">
                     <div class="inner">
@@ -53,7 +50,6 @@
                 </div>
             </div>
 
-            <!-- Total Blogs -->
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-warning">
                     <div class="inner">
@@ -67,7 +63,32 @@
             </div>
         </div>
 
-        <!-- Grafik Booking per Paket -->
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>Rp. {{ number_format($totalRevenue, 0, ',', '.') }}</h3>
+                        <p>Total Pendapatan</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>Rp. {{ number_format($monthlyRevenue, 0, ',', '.') }}</h3>
+                        <p>Pendapatan Bulan Ini</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row mt-4">
             <div class="col-md-6">
                 <div class="card">
@@ -80,7 +101,6 @@
                 </div>
             </div>
 
-            <!-- Grafik Tren Booking per Bulan -->
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">

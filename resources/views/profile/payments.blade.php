@@ -28,40 +28,42 @@
                         <strong>Harga Paket:</strong> Rp. {{ number_format($bookingDetails[$bookingId]['price']) }}
                     </div>
                     <div class="card-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Rincian</th>
-                                    <th>Nominal</th>
-                                    <th>Sisa Pembayaran</th>
-                                    <th>Tanggal Bayar</th>
-                                    <th>Metode</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($payments as $index => $payment)
+                        <div class="table-responsive"> {{-- Tambahkan div ini --}}
+                            <table class="table">
+                                <thead>
                                     <tr>
-                                        <td>{{ $index + 1 }}</td>
-                                        <td>{{ $payment['rincian'] }}</td>
-                                        <td>Rp. {{ number_format($payment['amount']) }}</td>
-                                        <td>Rp. {{ number_format($payment['remaining']) }}</td>
-                                        <td>{{ isset($payment['tanggal_bayar']) ? date('d-m-Y', strtotime($payment['tanggal_bayar'])) : '-' }}</td>
-                                        <td>{{ $payment['metode'] ?? '-' }}</td>
-                                        <td>
-                                            @if($payment['status'] === 'success')
-                                                <span class="badge bg-success">Lunas</span>
-                                            @elseif($payment['status'] === 'pending')
-                                                <span class="badge bg-warning">Pending</span>
-                                            @else
-                                                <span class="badge bg-danger">{{ ucfirst($payment['status']) }}</span>
-                                            @endif
-                                        </td>
+                                        <th>No</th>
+                                        <th>Rincian</th>
+                                        <th>Nominal</th>
+                                        <th>Sisa Pembayaran</th>
+                                        <th>Tanggal Bayar</th>
+                                        <th>Metode</th>
+                                        <th>Status</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach ($payments as $index => $payment)
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $payment['rincian'] }}</td>
+                                            <td>Rp. {{ number_format($payment['amount']) }}</td>
+                                            <td>Rp. {{ number_format($payment['remaining']) }}</td>
+                                            <td>{{ isset($payment['tanggal_bayar']) ? date('d-m-Y', strtotime($payment['tanggal_bayar'])) : '-' }}</td>
+                                            <td>{{ $payment['metode'] ?? '-' }}</td>
+                                            <td>
+                                                @if($payment['status'] === 'success')
+                                                    <span class="badge bg-success">Lunas</span>
+                                                @elseif($payment['status'] === 'pending')
+                                                    <span class="badge bg-warning">Pending</span>
+                                                @else
+                                                    <span class="badge bg-danger">{{ ucfirst($payment['status']) }}</span>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div> {{-- Tutup div table-responsive --}}
                     </div>
                 </div>
             @endif
@@ -74,7 +76,7 @@
     @if (count($bookingDetails) > 0)
     <div class="card mb-4">
         <div class="card-body">
-            <div class="table-responsive">
+            <div class="table-responsive"> {{-- Pastikan ini ada --}}
                 <table class="table table-bordered">
                     <thead>
                         <tr>

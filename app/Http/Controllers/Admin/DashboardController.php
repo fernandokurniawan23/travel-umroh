@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\TravelPackage;
 use App\Models\Booking;
 use App\Models\Blog;
+use App\Models\Payment; // Tambahkan import model Payment
 use Carbon\Carbon;
 
 class DashboardController extends Controller
@@ -33,6 +34,7 @@ class DashboardController extends Controller
 
         // Ambil data booking per bulan dari database
         $queryResult = Booking::selectRaw('MONTH(created_at) as month, COUNT(id) as total')
+            ->whereYear('created_at', date('Y'))
             ->groupBy('month')
             ->orderBy('month')
             ->get()
@@ -52,9 +54,16 @@ class DashboardController extends Controller
             $totals[] = $bookingsPerMonth[$i]; // Data booking per bulan
         }
 
+        // Informasi Keuangan
+        $totalRevenue = Payment::where('status', 'success')->sum('amount');
+        $monthlyRevenue = Payment::where('status', 'success')
+            ->whereMonth('payment_date', Carbon::now()->month)
+            ->sum('amount');
+
         return view('admin.dashboard', compact(
             'totalUsers', 'totalPackages', 'totalBookings', 'totalBlogs',
-            'labels', 'values', 'months', 'totals'
+            'labels', 'values', 'months', 'totals',
+            'totalRevenue', 'monthlyRevenue'
         ));
     }
 }

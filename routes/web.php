@@ -146,47 +146,43 @@ Route::middleware(['auth', 'role:administrator,administrasi,bendahara'])
 
 // Travel Package:
 Route::middleware(['auth', 'role:administrator,ketua,sekretaris'])
-    ->prefix('admin')->as('admin.')   // <-- Pastikan prefix dan as ada di sini juga
+    ->prefix('admin')->as('admin.')
     ->group(function () {
         Route::resource('travel_packages', TravelPackageController::class)->only(['index']);
         Route::resource('travel_packages.galleries', \App\Http\Controllers\Admin\GalleryController::class)->only(['index']);
-
-        // Route detail menggunakan method show
-        Route::get('travel_packages/{travel_package}', [TravelPackageController::class, 'show'])->name('travel_packages.show');
     });
 
 Route::middleware(['auth', 'role:administrator'])
     ->prefix('admin')->as('admin.')
     ->group(function () {
-        Route::resource('travel_packages', TravelPackageController::class)->except(['index', 'show']); // Sekarang 'show' juga di-except
+        Route::resource('travel_packages', TravelPackageController::class)->except(['index', 'show']);
         Route::resource('travel_packages.galleries', \App\Http\Controllers\Admin\GalleryController::class)->except(['index', 'show']);
     });
 
 
 // Blog Category dan Blog:
 // Ketua - hanya bisa melihat (read only)
-Route::middleware(['auth', 'role:ketua,administrator,administrasi'])
+Route::middleware(['auth', 'role:ketua,administrator'])
     ->prefix('admin')->as('admin.')
     ->group(function () {
         Route::resource('categories', CategoryController::class)->only(['index']);
         Route::resource('blogs', BlogController::class)->only(['index']);
-        // Rute detail
-        Route::get('blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show');
         // Rute untuk menampilkan gambar blog
         Route::resource('blogs.images', \App\Http\Controllers\Admin\BlogImageController::class)->only(['index']);
     });
 
 // Administrator - full access
-Route::middleware(['auth', 'role:administrator,administrasi'])
+Route::middleware(['auth', 'role:administrator'])
     ->prefix('admin')->as('admin.')
     ->group(function () {
         // ... route lainnya ...
         Route::resource('categories', CategoryController::class)->except(['index', 'show']);;
         Route::resource('blogs', BlogController::class)->except(['index', 'show']);;
         // Rute untuk menyimpan gambar blog
-        Route::post('blogs/{blog}/images', [\App\Http\Controllers\Admin\BlogImageController::class, 'store'])->name('blogs.images.store');
-        // Rute untuk menghapus gambar blog
-        Route::delete('blogs/{blog}/images/{blog_image}', [\App\Http\Controllers\Admin\BlogImageController::class, 'destroy'])->name('blogs.images.destroy');
+        Route::resource('blogs.images', \App\Http\Controllers\Admin\BlogImageController::class)->except(['index', 'show']);
+        // Route::post('blogs/{blog}/images', [\App\Http\Controllers\Admin\BlogImageController::class])->only('store');
+        // // Rute untuk menghapus gambar blog
+        // Route::delete('blogs/{blog}/images/{blog_image}', [\App\Http\Controllers\Admin\BlogImageController::class])->only('destroy');
     });
 
 

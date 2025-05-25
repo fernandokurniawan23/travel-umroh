@@ -2,7 +2,7 @@
 
 @section('content')
 <!--==================== HOME ====================-->
-<section>
+<!-- <section>
         <div class="swiper-container gallery-top">
           <div class="swiper-wrapper">
             <section class="feature swiper-slide">
@@ -21,7 +21,7 @@
             </section>
           </div>
         </div>
-      </section>
+      </section> -->
 
       <!-- blog -->
       <section class="blog section" id="blog">

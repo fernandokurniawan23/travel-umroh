@@ -117,26 +117,29 @@
                                 <a href="#" class="footer__link">Features </a>
                             </li> -->
                         <li>
-                            <a href="#" class="footer__link">News & Blog</a>
+                        <a href="{{ url('/blogs') }}" class="footer__link">Blog & Gallery</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('/travel-packages') }}" class="footer__link">Travel Packages</a>
                         </li>
                     </ul>
                 </div>
-                <div>
+                <!-- <div>
                     <h3 class="footer__title">Company</h3>
 
                     <ul class="footer__links">
                         <li>
                             <a href="#" class="footer__link">How We Work?
                             </a>
-                            <!-- </li>
+                            </li>
                             <li>
                                 <a href="#" class="footer__link">Capital </a>
                             </li>
                             <li>
                                 <a href="#" class="footer__link"> Security</a>
-                            </li> -->
+                            </li>
                     </ul>
-                </div>
+                </div> -->
                 <div>
                     <h3 class="footer__title">Support</h3>
 
@@ -150,7 +153,7 @@
                                 </a>
                             </li> -->
                         <li>
-                            <a href="#" class="footer__link"> Contact Us</a>
+                            <a href="{{ url('/contact') }}" class="footer__link">Contact Us</a>
                         </li>
                     </ul>
                 </div>
@@ -158,14 +161,11 @@
                     <h3 class="footer__title">Follow us</h3>
 
                     <ul class="footer__social">
-                        <a href="#" class="footer__social-link">
+                        <a href="https://www.facebook.com/share/1AS7yvu9d9/?mibextid=wwXIfr" class="footer__social-link" target="_blank" rel="noopener">
                             <i class="bx bxl-facebook-circle"></i>
                         </a>
-                        <a href="#" class="footer__social-link">
+                        <a href="https://www.instagram.com/haromaintravel?igsh=MWNtM2tneXBxNnZtbQ==" class="footer__social-link" target="_blank" rel="noopener">
                             <i class="bx bxl-instagram-alt"></i>
-                        </a>
-                        <a href="#" class="footer__social-link">
-                            <i class="bx bxl-pinterest"></i>
                         </a>
                     </ul>
                 </div>
@@ -176,10 +176,10 @@
             <span class="footer__copy">
                 &copy; {{ date('Y') }} Haromain Travel. All rights reserved.
             </span>
-            <div class="footer__privacy">
+            <!-- <div class="footer__privacy">
                 <a href="#">Terms & Agreements</a>
                 <a href="#">Privacy Policy</a>
-            </div>
+            </div> -->
         </div>
     </footer>
 

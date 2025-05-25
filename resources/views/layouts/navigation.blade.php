@@ -59,7 +59,7 @@
             @endif
 
             <!-- Blog (Admin dan ketua) -->
-            @if(in_array(Auth::user()->role, ['administrator', 'ketua','administrasi']))
+            @if(in_array(Auth::user()->role, ['administrator', 'ketua']))
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-circle nav-icon"></i>

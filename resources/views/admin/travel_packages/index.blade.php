@@ -6,8 +6,13 @@
             <div class="row mb-2">
                 <div class="col-sm-12 d-flex justify-content-between">
                     <h1 class="m-0">{{ __('Travel Packages') }}</h1>
+                    @if(auth()->user()->role == 'administrator')
                     <a href="{{ route('admin.travel_packages.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> </a>
-                </div></div></div></div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="content">
         <div class="container-fluid">
             <div class="row">

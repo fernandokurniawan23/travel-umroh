@@ -36,7 +36,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', Password::defaults()],
-            'role' => ['required', 'string', 'in:ketua,sekretaris,bendahara,administrasi'],
+            'role' => ['required', 'string', 'in:ketua,sekretaris,bendahara,administrasi,user'],
         ]);
 
         $user = User::create([
@@ -68,7 +68,7 @@ class UserController extends Controller
         $rules = [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', \Illuminate\Validation\Rule::unique('users')->ignore($user->id)],
-            'role' => ['required', 'string', 'in:administrator,ketua,sekretaris,bendahara,administrasi'],
+            'role' => ['required', 'string', 'in:administrator,ketua,sekretaris,bendahara,administrasi,user'],
         ];
 
         if ($request->filled('password')) {

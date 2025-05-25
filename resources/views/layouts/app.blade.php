@@ -7,7 +7,7 @@
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('css/fontawesome.min.css') }}">
     <!-- Theme style -->
@@ -56,10 +56,10 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="/" class="brand-link">
-            <img src="{{ asset('images/AdminLTELogo.png') }}" alt="AdminLTE Logo"
+            <img src="{{ asset('images/logo.png') }}" alt="Logo Haromain"
                  class="brand-image img-circle elevation-3"
                  style="opacity: .8">
-            <span class="brand-text font-weight-light">AdminLTE 3</span>
+            <span class="brand-text font-weight-light">Haromain Travel</span>
         </a>
 
         @include('layouts.navigation')
@@ -116,7 +116,7 @@
             Created by Fernando Kurniawan.
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+        <strong>&copy; {{ date('Y') }} <a href="{{ url('/') }}">HaromainTravel</a>.</strong> All rights reserved.
     </footer>
 </div>
 <!-- ./wrapper -->

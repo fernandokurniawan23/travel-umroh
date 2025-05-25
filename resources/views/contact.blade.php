@@ -2,11 +2,11 @@
 
 @section('content')
 <!--==================== HOME ====================-->
-<section>
+<!-- <section>
         <div class="swiper-container gallery-top">
-          <div class="swiper-wrapper">
+          <div class="swiper-wrapper"> -->
             <!--========== FEATURE 1 ==========-->
-            <section class="feature swiper-slide">
+            <!-- <section class="feature swiper-slide">
               <img
                 src="{{ asset('frontend/assets/img/contact-hero.jpg') }}"
                 alt=""
@@ -23,7 +23,7 @@
             </section>
           </div>
         </div>
-      </section>
+      </section> -->
       <!--==================== CONTACT ====================-->
       <section class="contact section" id="contact">
         <div class="contact__container container grid">
