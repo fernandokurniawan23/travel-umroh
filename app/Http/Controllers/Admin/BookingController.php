@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class BookingController extends Controller
 {
@@ -96,7 +97,7 @@ class BookingController extends Controller
             'paspor' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'vaccine_document' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
             'description' => 'nullable|string|max:500',
-            'receipt_status' => 'nullable|string|in:menunggu,dikirim,diterima', // Validasi status
+            'shipment_info' => 'nullable|string|max:255',
             'user_receipt_confirmation' => 'nullable|boolean', // Validasi konfirmasi admin
         ]);
 
@@ -142,5 +143,22 @@ class BookingController extends Controller
         $booking->delete();
 
         return redirect()->route('admin.bookings.index')->with('success', 'Booking berhasil dihapus.');
+    }
+
+    public function deleteFile(Request $request, Booking $booking, $column)
+    {
+        $allowedColumns = ['ktp', 'paspor', 'vaccine_document', 'receipt_confirmation'];
+
+        if (!in_array($column, $allowedColumns)) {
+            return back()->withErrors(['message' => 'Jenis file tidak valid.']);
+        }
+
+        if ($booking->{$column}) {
+            Storage::delete('public/' . $booking->{$column});
+            $booking->update([$column => null]);
+            return back()->with('success', ucfirst($column) . ' berhasil dihapus.');
+        }
+
+        return back()->withErrors(['message' => 'File tidak ditemukan.']);
     }
 }

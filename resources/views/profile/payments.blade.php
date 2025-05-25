@@ -80,7 +80,7 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Status Penerimaan</th>
+                            <th>Info Pengiriman/No. Resi</th>
                             <th>Bukti Penerimaan</th>
                             <th>Konfirmasi Penerimaan</th>
                         </tr>
@@ -89,7 +89,7 @@
                         @foreach ($bookingDetails as $bookingId => $details)
                             @if (!$selectedBooker || $selectedBooker == $details['name'])
                             <tr>
-                                <td>{{ $details['receipt_status'] ?? '-' }}</td>
+                                <td>{{ $details['shipment_info'] ?? '-' }}</td>
                                 <td>
                                     @if($details['receipt_confirmation'])
                                     <a href="{{ Storage::url($details['receipt_confirmation']) }}" target="_blank">Lihat Bukti</a>
@@ -98,7 +98,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($details['receipt_status'])
+                                    @if ($details['shipment_info'])
                                         @if (!$details['user_receipt_confirmation'])
                                             <form method="POST" action="{{ route('user.booking.markReceived', $bookingId) }}" class="d-inline">
                                                 @csrf

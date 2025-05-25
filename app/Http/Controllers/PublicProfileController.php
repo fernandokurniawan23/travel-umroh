@@ -39,7 +39,7 @@ class PublicProfileController extends Controller
                     'name' => $booking->name,
                     'package' => $booking->travel_package->type ?? '-',
                     'price' => $booking->travel_package->price ?? 0,
-                    'receipt_status' => $booking->receipt_status,
+                    'shipment_info' => $booking->shipment_info ?? '-',
                     'receipt_confirmation' => $booking->receipt_confirmation,
                     'user_receipt_confirmation' => $booking->user_receipt_confirmation, // Tambahkan ini
                     'email' => $booking->email,

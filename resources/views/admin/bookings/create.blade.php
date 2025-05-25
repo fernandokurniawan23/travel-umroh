@@ -58,13 +58,8 @@
                                     <input type="file" class="form-control" id="receipt_confirmation" name="receipt_confirmation" accept=".pdf,.jpg,.jpeg,.png">
                                 </div>
                                 <div class="form-group">
-                                    <label for="receipt_status">Status Penerimaan Perlengkapan</label>
-                                    <select class="form-control" id="receipt_status" name="receipt_status">
-                                        <option value="">Pilih Status</option>
-                                        <option value="menunggu" {{ old('receipt_status') == 'menunggu' ? 'selected' : '' }}>Menunggu</option>
-                                        <option value="dikirim" {{ old('receipt_status') == 'dikirim' ? 'selected' : '' }}>Dikirim</option>
-                                        <option value="diterima" {{ old('receipt_status') == 'diterima' ? 'selected' : '' }}>Diterima</option>
-                                    </select>
+                                    <label for="shipment_info">Info Pengiriman/No Resi</label>
+                                    <input type="text" class="form-control" id="shipment_info" name="shipment_info" value="{{ old('shipment_info') ?? '' }}">
                                 </div>
                                 <div class="form-group">
                                     <label>Konfirmasi User</label>

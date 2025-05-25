@@ -52,6 +52,9 @@ class BookingController extends Controller
         ]);
 
         $booking->save(); // Simpan booking untuk mendapatkan ID
+        // Generate order_id untuk user
+        $orderId = 'USR-' . $booking->id . '-' . now()->format('YmdHi');
+        $booking->update(['order_id' => $orderId]);
 
         // Buat Snap URL Midtrans dan dapatkan order_id dari service
         // $midtransResult = $this->midtrans->createTransaction($booking);

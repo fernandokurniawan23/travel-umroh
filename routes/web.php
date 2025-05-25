@@ -92,14 +92,6 @@ Route::middleware(['auth', 'role:administrator'])
         Route::resource('users', UserController::class)->except(['index', 'show']);
     });
 
-// Booking:
-// Semua role bisa lihat daftar booking
-Route::middleware(['auth', 'role:administrator,administrasi,ketua,sekretaris,bendahara'])
-    ->prefix('admin')->as('admin.')
-    ->group(function () {
-        Route::get('bookings', [BookingController::class, 'index'])->name('bookings.index');
-    });
-
 //payment
 Route::middleware(['auth', 'role:administrator,administrasi,ketua,sekretaris,bendahara'])
     ->prefix('admin')->as('admin.')
@@ -123,6 +115,14 @@ Route::middleware(['auth', 'role:administrator,administrasi,bendahara'])
         Route::patch('payments/{payment}', [\App\Http\Controllers\Admin\PaymentController::class, 'update']); // Optional untuk payments
     });
 
+// Booking:
+// Semua role bisa lihat daftar booking
+Route::middleware(['auth', 'role:administrator,administrasi,ketua,sekretaris,bendahara'])
+    ->prefix('admin')->as('admin.')
+    ->group(function () {
+        Route::get('bookings', [BookingController::class, 'index'])->name('bookings.index');
+    });
+
 // administrator & administrasi full akses (tanpa index)
 Route::middleware(['auth', 'role:administrator,administrasi'])
     ->prefix('admin')->as('admin.')
@@ -131,11 +131,12 @@ Route::middleware(['auth', 'role:administrator,administrasi'])
         Route::post('bookings', [BookingController::class, 'store'])->name('bookings.store');
         Route::get('bookings/{booking}', [BookingController::class, 'show'])->name('bookings.show');
         Route::delete('bookings/{booking}', [BookingController::class, 'destroy'])->name('bookings.destroy');
+        Route::get('bookings/{booking}/files/{file}', [BookingController::class, 'deleteFile'])->name('bookings.deleteFile');
         Route::get('bookings/{booking}/details', [PaymentController::class, 'getBookingDetails'])->name('bookings.details');
     });
 
-// administrator, administrasi, bendahara bisa edit dan update
-Route::middleware(['auth', 'role:administrator,administrasi,bendahara'])
+// administrator, administrasi bisa edit dan update
+Route::middleware(['auth', 'role:administrator,administrasi'])
     ->prefix('admin')->as('admin.')
     ->group(function () {
         Route::get('bookings/{booking}/edit', [BookingController::class, 'edit'])->name('bookings.edit');

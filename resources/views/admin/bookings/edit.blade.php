@@ -48,26 +48,38 @@
                                     <label for="ktp">KTP</label>
                                     <input type="file" class="form-control" id="ktp" name="ktp">
                                     @if ($booking->ktp)
-                                    <small class="form-text text-muted">File KTP saat ini: <a href="{{ Storage::url($booking->ktp) }}" target="_blank">Lihat</a></small>
+                                        <small class="form-text text-muted">
+                                            File KTP saat ini:
+                                            <a href="{{ Storage::url($booking->ktp) }}" target="_blank">Lihat</a>
+                                            <button type="button" class="btn btn-sm btn-danger ml-2" onclick="deleteFile('{{ $booking->id }}', 'ktp')">Hapus</button>
+                                        </small>
                                     @endif
                                 </div>
+
                                 <div class="form-group">
                                     <label for="paspor">Paspor</label>
                                     <input type="file" class="form-control" id="paspor" name="paspor">
                                     @if ($booking->paspor)
-                                    <small class="form-text text-muted">File Paspor saat ini: <a href="{{ Storage::url($booking->paspor) }}" target="_blank">Lihat</a></small>
+                                        <small class="form-text text-muted">
+                                            File Paspor saat ini:
+                                            <a href="{{ Storage::url($booking->paspor) }}" target="_blank">Lihat</a>
+                                            <button type="button" class="btn btn-sm btn-danger ml-2" onclick="deleteFile('{{ $booking->id }}', 'paspor')">Hapus</button>
+                                        </small>
                                     @endif
                                 </div>
+
                                 <div class="form-group">
                                     <label for="vaccine_document">Dokumen Vaksin</label>
                                     <input type="file" class="form-control" id="vaccine_document" name="vaccine_document" accept=".pdf,.jpg,.jpeg,.png">
                                     @if ($booking->vaccine_document)
-                                    <small class="form-text text-muted">
-                                        File saat ini:
-                                        <a href="{{ Storage::url($booking->vaccine_document) }}" target="_blank">Lihat</a>
-                                    </small>
+                                        <small class="form-text text-muted">
+                                            File saat ini:
+                                            <a href="{{ Storage::url($booking->vaccine_document) }}" target="_blank">Lihat</a>
+                                            <button type="button" class="btn btn-sm btn-danger ml-2" onclick="deleteFile('{{ $booking->id }}', 'vaccine_document')">Hapus</button>
+                                        </small>
                                     @endif
                                 </div>
+
                                 <div class="form-group">
                                     <label for="receipt_confirmation">Bukti Penerimaan Perlengkapan</label>
                                     <input type="file" class="form-control" id="receipt_confirmation" name="receipt_confirmation" accept=".pdf,.jpg,.jpeg,.png">
@@ -75,18 +87,22 @@
                                         <small class="form-text text-muted">
                                             File bukti saat ini:
                                             <a href="{{ Storage::url($booking->receipt_confirmation) }}" target="_blank">Lihat</a>
+                                            <button type="button" class="btn btn-sm btn-danger ml-2" onclick="deleteFile('{{ $booking->id }}', 'receipt_confirmation')">Hapus</button>
                                         </small>
                                     @endif
                                 </div>
 
+                                <script>
+                                    function deleteFile(bookingId, columnName) {
+                                        if (confirm('Apakah Anda yakin ingin menghapus file ini?')) {
+                                            window.location.href = '/admin/bookings/' + bookingId + '/files/' + columnName;
+                                        }
+                                    }
+                                </script>
+
                                 <div class="form-group">
-                                    <label for="receipt_status">Status Penerimaan Perlengkapan</label>
-                                    <select class="form-control" id="receipt_status" name="receipt_status">
-                                        <option value="">Pilih Status</option>
-                                        <option value="menunggu" {{ old('receipt_status', $booking->receipt_status) == 'menunggu' ? 'selected' : '' }}>Menunggu</option>
-                                        <option value="dikirim" {{ old('receipt_status', $booking->receipt_status) == 'dikirim' ? 'selected' : '' }}>Dikirim</option>
-                                        <option value="diterima" {{ old('receipt_status', $booking->receipt_status) == 'diterima' ? 'selected' : '' }}>Diterima</option>
-                                        </select>
+                                    <label for="shipment_info">Info Pengiriman/No Resi</label>
+                                    <input type="text" class="form-control" id="shipment_info" name="shipment_info" value="{{ old('shipment_info', $booking->shipment_info ?? '') }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="user_receipt_confirmation">Konfirmasi Penerima oleh Admin</label>
