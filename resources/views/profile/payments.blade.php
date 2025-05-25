@@ -104,7 +104,7 @@
                                                 @csrf
                                                 <button type="submit" class="btn btn-sm btn-success">Sudah Diterima</button>
                                             </form>
-                                            <a href="https://wa.me/6281317267693?text=Halo,%20saya%20dengan%20data:%0ANama:%20{{ $details['name'] }}%0APaket:%20{{ $details['package'] }}%0AEmail:%20{{ $bookingDetails[$bookingId]['email'] ?? '' }}%0ANo.%20Telp:%20{{ $bookingDetails[$bookingId]['number_phone'] ?? '' }}%0Aingin%20menginformasikan%20bahwa%20saya%20belum%20menerima%20perlengkapan." class="btn btn-sm btn-warning ml-1" target="_blank">Belum Diterima</a>
+                                            <a href="https://wa.me/6285798807867?text=Halo,%20saya%20dengan%20data:%0ANama:%20{{ $details['name'] }}%0APaket:%20{{ $details['package'] }}%0AEmail:%20{{ $bookingDetails[$bookingId]['email'] ?? '' }}%0ANo.%20Telp:%20{{ $bookingDetails[$bookingId]['number_phone'] ?? '' }}%0Aingin%20menginformasikan%20bahwa%20saya%20belum%20menerima%20perlengkapan." class="btn btn-sm btn-warning ml-1" target="_blank">Belum Diterima</a>
                                         @elseif ($details['user_receipt_confirmation'])
                                             <span class="text-success">Dikonfirmasi Penerima</span>
                                         @endif

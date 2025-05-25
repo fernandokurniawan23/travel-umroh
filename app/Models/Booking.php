@@ -23,6 +23,7 @@ class Booking extends Model
         'order_id',
         'receipt_confirmation',
         'receipt_status',
+        'user_receipt_confirmation'
     ];
 
 

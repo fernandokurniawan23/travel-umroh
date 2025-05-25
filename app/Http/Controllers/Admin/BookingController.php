@@ -96,10 +96,13 @@ class BookingController extends Controller
             'paspor' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'vaccine_document' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
             'description' => 'nullable|string|max:500',
+            'receipt_status' => 'nullable|string|in:menunggu,dikirim,diterima', // Validasi status
+            'user_receipt_confirmation' => 'nullable|boolean', // Validasi konfirmasi admin
         ]);
 
         $data = $request->all();
 
+        // Tangani upload file seperti sebelumnya
         if ($request->hasFile('ktp')) {
             if ($booking->ktp) {
                 \Illuminate\Support\Facades\Storage::delete('public/' . $booking->ktp);
@@ -128,6 +131,7 @@ class BookingController extends Controller
             $data['receipt_confirmation'] = $request->file('receipt_confirmation')->store('uploads/bukti_penerimaan', 'public');
         }
 
+        // Pastikan status penerimaan dan konfirmasi admin ikut diupdate
         $booking->update($data);
 
         return redirect()->route('admin.bookings.index')->with('success', 'Booking berhasil diperbarui.');
