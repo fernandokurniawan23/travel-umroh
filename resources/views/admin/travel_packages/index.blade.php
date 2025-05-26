@@ -49,12 +49,12 @@
                                             <td>{{ Str::limit($travel_package->description, 100) }}</td> {{-- Ringkas deskripsi --}}
                                             <td>
                                             <td>
-                                                @if(auth()->user()->role == 'administrator')
-                                                <a href="{{ route('admin.travel_packages.edit', [$travel_package]) }}" class="btn btn-sm btn-info"> <i class="fa fa-edit"></i> </a>
-                                                @endif
                                                 <a href="{{ route('travel_package.show', $travel_package) }}" class="btn btn-sm btn-primary" target="_blank">
                                                     <i class="fa fa-eye"></i> Detail
                                                 </a>
+                                                @if(auth()->user()->role == 'administrator')
+                                                <a href="{{ route('admin.travel_packages.edit', [$travel_package]) }}" class="btn btn-sm btn-info"> <i class="fa fa-edit"></i> </a>
+                                                @endif
                                                 @if(auth()->user()->role == 'administrator')
                                                 <form onclick="return confirm('are you sure ?');" class="d-inline-block" action="{{ route('admin.travel_packages.destroy', [$travel_package]) }}" method="post">
                                                     @csrf

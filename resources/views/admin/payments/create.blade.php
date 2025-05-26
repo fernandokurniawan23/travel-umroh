@@ -12,7 +12,7 @@
             <select name="booking_id" id="booking_id" class="form-control" required>
                 <option value="">-- Pilih Booking --</option>
                 @foreach($bookings as $booking)
-                    <option value="{{ $booking->id }}">{{ $booking->name }} (ID: {{ $booking->id }})</option>
+                    <option value="{{ $booking->id }}">{{ $booking->name }} (Order ID {{ $booking->order_id }})</option>
                 @endforeach
             </select>
         </div>

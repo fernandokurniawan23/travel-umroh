@@ -72,7 +72,7 @@ class BookingController extends Controller
         $waNumber = '6285798807867'; // Ganti dengan nomor WA bisnis kamu
         $package = $booking->travel_package->type ?? 'Paket Umrah'; // asumsi relasi ada
 
-        $waMessage = urlencode("Halo Admin, saya ingin booking paket umrah:\n\nNama: {$booking->name}\nNo HP: {$booking->number_phone}\nEmail: {$booking->email}\nPaket: {$package}");
+        $waMessage = urlencode("Halo Admin, saya ingin booking paket umrah:\n\nOrder ID: {$booking->order_id}\nNama: {$booking->name}\nNo HP: {$booking->number_phone}\nEmail: {$booking->email}\nPaket: {$package}");
 
         return redirect()->away("https://wa.me/{$waNumber}?text={$waMessage}");
     }

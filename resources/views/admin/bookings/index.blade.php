@@ -10,7 +10,7 @@
                 <div class="mb-3">
                     <form action="{{ route('admin.bookings.index') }}" method="GET">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="search" placeholder="nama, email, paket travel">
+                            <input type="text" class="form-control" name="search" placeholder="nama, email,order id, paket travel">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="submit">Search</button>
                             </div>
@@ -36,6 +36,7 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
+                                        <th> Order ID</th>
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Number Phone</th>
@@ -55,6 +56,7 @@
                                     @foreach($bookings as $booking)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $booking->order_id }}</td>
                                         <td>{{ $booking->name }}</td>
                                         <td>{{ $booking->email }}</td>
                                         <td>{{ $booking->number_phone }}</td>

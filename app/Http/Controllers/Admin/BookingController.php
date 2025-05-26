@@ -18,6 +18,7 @@ class BookingController extends Controller
             $bookings->where(function ($query) use ($search) {
                 $query->where('name', 'like', '%' . $search . '%')
                     ->orWhere('email', 'like', '%' . $search . '%')
+                    ->orWhere('order_id', 'like', '%' . $search . '%')
                     ->orWhereHas('travel_package', function ($query) use ($search) {
                         $query->where('type', 'like', '%' . $search . '%');
                     });
