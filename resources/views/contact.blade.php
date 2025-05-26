@@ -40,7 +40,7 @@
               <span class="section__subtitle">Need Help</span>
               <h2 class="section__title">Jangan ragu untuk menghubungi kami</h2>
               <p class="contact__description">
-              Butuh bantuan umrah? Kami siap memberikan informasi dan konsultasi. Hubungi kami sekarang!
+              Butuh bantuan umrah? <br> Kami siap memberikan informasi dan konsultasi. <br> Hubungi kami sekarang!
               </p>
             </div>
 
