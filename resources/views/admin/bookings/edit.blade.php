@@ -81,13 +81,13 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="receipt_confirmation">Bukti Penerimaan Perlengkapan</label>
-                                    <input type="file" class="form-control" id="receipt_confirmation" name="receipt_confirmation" accept=".pdf,.jpg,.jpeg,.png">
-                                    @if ($booking->receipt_confirmation)
+                                    <label for="shipment_receipt">Bukti Pengiriman Perlengkapan</label>
+                                    <input type="file" class="form-control" id="shipment_receipt" name="shipment_receipt" accept=".pdf,.jpg,.jpeg,.png">
+                                    @if ($booking->shipment_receipt)
                                         <small class="form-text text-muted">
                                             File bukti saat ini:
-                                            <a href="{{ Storage::url($booking->receipt_confirmation) }}" target="_blank">Lihat</a>
-                                            <button type="button" class="btn btn-sm btn-danger ml-2" onclick="deleteFile('{{ $booking->id }}', 'receipt_confirmation')">Hapus</button>
+                                            <a href="{{ Storage::url($booking->shipment_receipt) }}" target="_blank">Lihat</a>
+                                            <button type="button" class="btn btn-sm btn-danger ml-2" onclick="deleteFile('{{ $booking->id }}', 'shipment_receipt')">Hapus</button>
                                         </small>
                                     @endif
                                 </div>

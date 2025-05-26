@@ -54,8 +54,8 @@
                                     <input type="file" class="form-control" id="vaccine_document" name="vaccine_document">
                                 </div>
                                 <div class="form-group">
-                                    <label for="receipt_confirmation">Bukti Penerimaan Perlengkapan</label>
-                                    <input type="file" class="form-control" id="receipt_confirmation" name="receipt_confirmation" accept=".pdf,.jpg,.jpeg,.png">
+                                    <label for="shipment_receipt">Bukti Pengiriman Perlengkapan</label>
+                                    <input type="file" class="form-control" id="shipment_receipt" name="shipment_receipt" accept=".pdf,.jpg,.jpeg,.png">
                                 </div>
                                 <div class="form-group">
                                     <label for="shipment_info">Info Pengiriman/No Resi</label>

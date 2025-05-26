@@ -1036,7 +1036,7 @@ body.dark-theme {
         column-gap: 3rem;
     }
     .nav__link {
-        color: #fff;
+        color: #050505;
     }
     .nav__link i {
         display: none;

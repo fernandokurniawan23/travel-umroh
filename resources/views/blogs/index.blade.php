@@ -30,7 +30,7 @@
             >All Blog</span
           >
           <h2 class="section__title" style="text-align: center">
-            Explore Tips and Information
+            Information, Tips & Gallery
           </h2>
 
           <div class="blog__content grid">

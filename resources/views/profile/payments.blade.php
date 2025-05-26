@@ -81,7 +81,7 @@
                     <thead>
                         <tr>
                             <th>Info Pengiriman/No. Resi</th>
-                            <th>Bukti Penerimaan</th>
+                            <th>Bukti Pengiriman</th>
                             <th>Konfirmasi Penerimaan</th>
                         </tr>
                     </thead>
@@ -91,8 +91,8 @@
                             <tr>
                                 <td>{{ $details['shipment_info'] ?? '-' }}</td>
                                 <td>
-                                    @if($details['receipt_confirmation'])
-                                    <a href="{{ Storage::url($details['receipt_confirmation']) }}" target="_blank">Lihat Bukti</a>
+                                    @if($details['shipment_receipt'])
+                                    <a href="{{ Storage::url($details['shipment_receipt']) }}" target="_blank">Lihat Bukti</a>
                                     @else
                                     Belum ada bukti diunggah
                                     @endif

@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('bookings', function (Blueprint $table) {
-            $table->string('receipt_confirmation')->nullable()->after('user_id');
-            $table->string('shipment_info')->nullable()->after('receipt_confirmation');
+            $table->string('shipment_receipt')->nullable()->after('user_id');
+            $table->string('shipment_info')->nullable()->after('shipment_receipt');
         });
     }
 
@@ -23,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('bookings', function (Blueprint $table) {
-            $table->dropColumn(['receipt_confirmation', 'shipment_info']);
+            $table->dropColumn(['shipment_receipt', 'shipment_info']);
         });
     }
 };

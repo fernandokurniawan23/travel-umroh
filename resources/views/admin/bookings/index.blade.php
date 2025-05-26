@@ -44,7 +44,7 @@
                                         <th>Vaksin</th>
                                         <th>Travel Package</th>
                                         <th>Info Pengiriman</th>
-                                        <th>Bukti Penerimaan</th>
+                                        <th>Bukti Pengiriman</th>
                                         <th>Konfirmasi User</th>
                                         @if(in_array(auth()->user()->role, ['administrator', 'administrasi']))
                                         <th>Action</th>
@@ -87,8 +87,8 @@
                                         </td>
                                         <td>{{ $booking->travel_package->type }}</td>
                                         <td>{{ $booking->shipment_info ?? '-' }}</td> <td>
-                                            @if($booking->receipt_confirmation)
-                                            <a href="{{ Storage::url($booking->receipt_confirmation) }}" target="_blank">
+                                            @if($booking->shipment_receipt)
+                                            <a href="{{ Storage::url($booking->shipment_receipt) }}" target="_blank">
                                                 <i class="fa fa-file"></i> Lihat Bukti
                                             </a>
                                             @else

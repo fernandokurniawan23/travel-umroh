@@ -21,7 +21,7 @@ class Booking extends Model
         'travel_package_id',
         'user_id',
         'order_id',
-        'receipt_confirmation',
+        'shipment_receipt',
         'shipment_info',
         'user_receipt_confirmation'
     ];

@@ -9,6 +9,8 @@
     <link
         href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
         rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 
     <!--=============== SWIPER CSS ===============-->
     <link
@@ -33,32 +35,32 @@
                 <ul class="nav__list">
                     <li class="nav__item">
                         <a href="{{ route('homepage') }}" class="nav__link {{ request()->is('/') ? ' active-link' : '' }}">
-                            <i class="bx bx-home-alt"></i>
+                            <i class="fas fa-home"></i>
                             <span>Home</span>
                         </a>
                     </li>
                     <li class="nav__item">
                         <a href="{{ route('travel_package.index') }}" class="nav__link {{ request()->is('travel-packages') || request()->is('travel-packages/*')  ? ' active-link' : '' }}">
-                            <i class="bx bx-building-house"></i>
+                            <i class="fas fa-plane-departure"></i>
                             <span>Package Travel</span>
                         </a>
                     </li>
                     <li class="nav__item">
                         <a href="{{ route('blog.index') }}" class="nav__link {{ request()->is('blogs') || request()->is('blogs/*')  ? ' active-link' : '' }}">
-                            <i class="bx bx-award"></i>
+                            <i class="fas fa-book-open"></i>
                             <span>Blog</span>
                         </a>
                     </li>
                     <li class="nav__item">
                         <a href="{{ route('contact') }}" class="nav__link {{ request()->is('contact') ? ' active-link' : '' }}">
-                            <i class="bx bx-phone"></i>
+                            <i class="fas fa-phone-alt"></i>
                             <span>Contact</span>
                         </a>
                     </li>
                     @auth
                     <li class="nav__item">
                         <a href="{{ route('user.profile.payments') }}" class="nav__link {{ request()->is('profile/payments') ? ' active-link' : '' }}">
-                            <i class='bx bx-history'></i>
+                            <i class="fas fa-receipt"></i>
                             <span>History</span>
                         </a>
                     </li>

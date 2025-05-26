@@ -60,8 +60,8 @@ class BookingController extends Controller
             $data['vaccine_document'] = $request->file('vaccine_document')->store('uploads/vaccine_document', 'public');
         }
 
-        if ($request->hasFile('receipt_confirmation')) {
-            $data['receipt_confirmation'] = $request->file('receipt_confirmation')->store('uploads/bukti_penerimaan', 'public');
+        if ($request->hasFile('shipment_receipt')) {
+            $data['shipment_receipt'] = $request->file('shipment_receipt')->store('uploads/bukti_penerimaan', 'public');
         }
 
         $data['user_id'] = auth()->id();
@@ -125,11 +125,11 @@ class BookingController extends Controller
             $data['vaccine_document'] = $request->file('vaccine_document')->store('uploads/vaccine_document', 'public');
         }
 
-        if ($request->hasFile('receipt_confirmation')) {
-            if ($booking->receipt_confirmation) {
-                \Illuminate\Support\Facades\Storage::delete('public/' . $booking->receipt_confirmation);
+        if ($request->hasFile('shipment_receipt')) {
+            if ($booking->shipment_receipt) {
+                \Illuminate\Support\Facades\Storage::delete('public/' . $booking->shipment_receipt);
             }
-            $data['receipt_confirmation'] = $request->file('receipt_confirmation')->store('uploads/bukti_penerimaan', 'public');
+            $data['shipment_receipt'] = $request->file('shipment_receipt')->store('uploads/bukti_penerimaan', 'public');
         }
 
         // Pastikan status penerimaan dan konfirmasi admin ikut diupdate
@@ -147,7 +147,7 @@ class BookingController extends Controller
 
     public function deleteFile(Request $request, Booking $booking, $column)
     {
-        $allowedColumns = ['ktp', 'paspor', 'vaccine_document', 'receipt_confirmation'];
+        $allowedColumns = ['ktp', 'paspor', 'vaccine_document', 'shipment_receipt'];
 
         if (!in_array($column, $allowedColumns)) {
             return back()->withErrors(['message' => 'Jenis file tidak valid.']);
