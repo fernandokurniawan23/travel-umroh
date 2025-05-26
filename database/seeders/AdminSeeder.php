@@ -14,13 +14,13 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         // Cek apakah admin dengan email ini sudah ada
-        $admin = User::where('email', 'admin@admin.com')->first();
+        $admin = User::where('email', 'haromaintravel@gmail.com')->first();
 
         if (!$admin) {
             // Jika belum ada, buat admin baru
             $admin = User::create([
-                'name' => 'admin',
-                'email' => 'admin@admin.com',
+                'name' => 'administrator',
+                'email' => 'haromaintravel@gmail.com',
                 'password' => bcrypt('123'),
                 'role' => 'administrator',
             ]);
