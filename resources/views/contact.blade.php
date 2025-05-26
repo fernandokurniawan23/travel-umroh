@@ -40,10 +40,7 @@
               <span class="section__subtitle">Need Help</span>
               <h2 class="section__title">Jangan ragu untuk menghubungi kami</h2>
               <p class="contact__description">
-                Apakah Anda membutuhkan bantuan dalam merencanakan perjalanan umrah berikutnya?
-                Atau mungkin membutuhkan panduan untuk perjalanan pertama Anda? 
-                Kami siap memberikan informasi dan konsultasi terkait perjalanan umrah Anda.<br>
-                 Hubungi kami sekarang juga!
+              Butuh bantuan umrah? Kami siap memberikan informasi dan konsultasi. Hubungi kami sekarang!
               </p>
             </div>
 
