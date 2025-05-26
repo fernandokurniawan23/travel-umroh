@@ -61,7 +61,7 @@ class BookingController extends Controller
         }
 
         if ($request->hasFile('shipment_receipt')) {
-            $data['shipment_receipt'] = $request->file('shipment_receipt')->store('uploads/bukti_penerimaan', 'public');
+            $data['shipment_receipt'] = $request->file('shipment_receipt')->store('uploads/bukti_pengiriman', 'public');
         }
 
         $data['user_id'] = auth()->id();
@@ -129,7 +129,7 @@ class BookingController extends Controller
             if ($booking->shipment_receipt) {
                 \Illuminate\Support\Facades\Storage::delete('public/' . $booking->shipment_receipt);
             }
-            $data['shipment_receipt'] = $request->file('shipment_receipt')->store('uploads/bukti_penerimaan', 'public');
+            $data['shipment_receipt'] = $request->file('shipment_receipt')->store('uploads/bukti_pengiriman', 'public');
         }
 
         // Pastikan status penerimaan dan konfirmasi admin ikut diupdate
