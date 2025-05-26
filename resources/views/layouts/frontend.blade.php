@@ -100,11 +100,11 @@
                 <a href="{{ route('homepage') }}" class="footer__logo">
                     <img src="{{ asset('frontend/assets/img/logo.png') }}" alt="HAROMAIN TRAVEL Logo" style="width: 150px; height: auto;">
                 </a>
-                <p class="footer__description">
+                <!-- <p class="footer__description">
                     Visi kami adalah menjadi penyedia travel umroh dan haji terpercaya <br />
                     dengan layanan terbaik untuk perjalanan ibadah <br />
                     yang nyaman dan berkesan.
-                </p>
+                </p> -->
             </div>
 
             <div class="footer__content">

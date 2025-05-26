@@ -18,8 +18,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-body p-0">
-
+                    <div class="card-body p-0">
+                        <div style="overflow-x: auto;">
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -28,26 +28,26 @@
                                         <th>Image</th>
                                         <th>Location</th>
                                         <th>Price</th>
-                                        <th>Description</th> {{-- Tambah kolom Description --}}
+                                        <th>Description</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse($travel_packages as $travel_package)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $travel_package->type }}</td>
-                                            <td>
-                                                @if($travel_package->galleries->isNotEmpty())
-                                                    <img src="{{ asset('storage/' . $travel_package->galleries->first()->images) }}" alt="{{ $travel_package->type }}" width="100">
-                                                @else
-                                                    No Image
-                                                @endif
-                                            </td>
-                                            <td>{{ $travel_package->location }}</td>
-                                            <td>{{ $travel_package->price }}</td>
-                                            <td>{{ Str::limit($travel_package->description, 100) }}</td> {{-- Ringkas deskripsi --}}
-                                            <td>
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $travel_package->type }}</td>
+                                        <td>
+                                            @if($travel_package->galleries->isNotEmpty())
+                                                <img src="{{ asset('storage/' . $travel_package->galleries->first()->images) }}" alt="{{ $travel_package->type }}" width="100">
+                                            @else
+                                                No Image
+                                            @endif
+                                        </td>
+                                        <td>{{ $travel_package->location }}</td>
+                                        <td>{{ $travel_package->price }}</td>
+                                        <td>{{ Str::limit($travel_package->description, 100) }}</td>
+                                        <td>
                                             <td>
                                                 <a href="{{ route('travel_package.show', $travel_package) }}" class="btn btn-sm btn-primary" target="_blank">
                                                     <i class="fa fa-eye"></i> Detail
@@ -63,7 +63,8 @@
                                                 </form>
                                                 @endif
                                             </td>
-                                        </tr>
+                                        </td>
+                                    </tr>
                                     @empty
                                         <tr>
                                             <td class="text-center" colspan="7">Data Kosong</td>
@@ -72,6 +73,7 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
                         <div class="card-footer clearfix">
                             {{ $travel_packages->links() }}
                         </div>

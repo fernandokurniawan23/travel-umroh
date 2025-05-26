@@ -4,10 +4,11 @@
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
-            <div class="col-sm-12 justify-content-between d-flex">
-                <h1 class="m-0">{{ __('Daftar Pembayaran') }}</h1>
+        <div class="col-sm-12 d-flex justify-content-between align-items-center mb-2">
+            <h1 class="m-0">{{ __('Daftar Pembayaran') }}</h1>
+            <div class="d-flex align-items-center">
                 @if(in_array(auth()->user()->role, ['administrator', 'bendahara', 'administrasi']))
-                <div class="mb-3">
+                <div class="mb-3 mr-2" style="width: 400px;">
                     <form action="{{ route('admin.payments.index') }}" method="GET">
                         <div class="input-group">
                             <input type="text" class="form-control" name="search" placeholder="nama, email, paket travel,metode,status">
@@ -18,10 +19,30 @@
                     </form>
                 </div>
                 <a href="{{ route('admin.payments.create') }}" class="btn btn-primary">
-                    <i class="fa fa-plus"></i> Tambah Pembayaran
+                    <i class="fa fa-plus"></i>Pembayaran
                 </a>
                 @endif
             </div>
+        </div>
+
+        <style>
+        @media (max-width: 768px) {
+            .justify-content-between {
+                flex-direction: column;
+                align-items: flex-start !important;
+            }
+
+            .align-items-center > *:first-child {
+                margin-bottom: 1rem;
+            }
+
+            .mr-2 {
+                margin-right: 0 !important;
+                width: 100% !important;
+                margin-bottom: 1rem !important;
+            }
+        }
+        </style>
         </div>
     </div>
 </div>
