@@ -52,22 +52,22 @@
                   <i class="bx bxs-phone-call"></i>
                   <div>
                     <h3 class="contact__card-title">Call</h3>
-                    <p class="contact__card-description">+6281285708894</p>
+                    <p class="contact__card-description">+6285798807867</p>
                   </div>
                 </div>
 
-                <button class="button contact__card-button" onclick="window.location.href='tel:+6281285708894'">Call Now</button>
+                <button class="button contact__card-button" onclick="window.location.href='tel:+6285798807867'">Call Now</button>
               </div>
               <div class="contact__card-box">
                 <div class="contact__card-info">
                   <i class="bx bxs-message-rounded-dots"></i>
                   <div>
                     <h3 class="contact__card-title">Whatsapp</h3>
-                    <p class="contact__card-description">+6281285708894</p>
+                    <p class="contact__card-description">+6285798807867</p>
                   </div>
                 </div>
 
-                <button class="button contact__card-button" onclick="window.open('https://api.whatsapp.com/send?phone=6281285708894&text=Halo%20saya%20ingin%20mendapatkan%20informasi%20tentang%20perjalanan%20umrah', '_blank')">Chat Now</button>
+                <button class="button contact__card-button" onclick="window.open('https://api.whatsapp.com/send?phone=6285798807867&text=Halo%20saya%20ingin%20mendapatkan%20informasi%20tentang%20perjalanan%20umrah', '_blank')">Chat Now</button>
                 <!-- <button class="button contact__card-button">Chat Now</button> -->
               </div>
               
@@ -76,11 +76,11 @@
                   <i class="bx bxs-phone-call"></i>
                   <div>
                     <h3 class="contact__card-title">Message</h3>
-                    <p class="contact__card-description">+6281285708894</p>
+                    <p class="contact__card-description">+6285798807867</p>
                   </div>
                 </div>
 
-                <button class="button contact__card-button" onclick="window.location.href='sms:+6281285708894?body=Halo%20saya%20ingin%20bertanya%20tentang%20perjalanan%20umrah'">Message Now</button>
+                <button class="button contact__card-button" onclick="window.location.href='sms:+6285798807867?body=Halo%20saya%20ingin%20bertanya%20tentang%20perjalanan%20umrah'">Message Now</button>
               </div>
               <div class="contact__card-box">
                 <div class="contact__card-info">
