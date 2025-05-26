@@ -90,17 +90,26 @@
 
         bookingSelect.addEventListener('change', function() {
             const bookingId = this.value;
+            console.log('Booking ID dipilih:', bookingId); // Tambahkan log ini
             if (bookingId) {
                 fetch(`/admin/bookings/${bookingId}/details`)
-                    .then(response => response.json())
+                    .then(response => {
+                        console.log('Response details:', response); // Tambahkan log ini
+                        return response.json();
+                    })
                     .then(data => {
+                        console.log('Data details:', data); // Tambahkan log ini
                         customerNameInput.value = data.name || '';
                         customerEmailInput.value = data.email || '';
                         travelPackageTypeInput.value = data.travel_package ? data.travel_package.type : '';
                         travelPackagePriceInput.value = data.travel_package ? formatCurrency(data.travel_package.price) : '';
                         fetch(`/admin/bookings/${bookingId}/payments`)
-                            .then(response => response.json())
+                            .then(response => {
+                                console.log('Response payments:', response); // Tambahkan log ini
+                                return response.json();
+                            })
                             .then(payments => {
+                                console.log('Data payments:', payments); // Tambahkan log ini
                                 let totalPaid = payments.reduce((sum, payment) => sum + payment.amount, 0);
                                 alreadyPaidInput.value = formatCurrency(totalPaid);
                                 const price = data.travel_package ? data.travel_package.price : 0;

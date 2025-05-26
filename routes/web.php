@@ -124,7 +124,7 @@ Route::middleware(['auth', 'role:administrator,administrasi,ketua,sekretaris,ben
     });
 
 // administrator & administrasi full akses (tanpa index)
-Route::middleware(['auth', 'role:administrator,administrasi'])
+Route::middleware(['auth', 'role:administrator,administrasi,bendahara'])
     ->prefix('admin')->as('admin.')
     ->group(function () {
         Route::get('bookings/create', [BookingController::class, 'create'])->name('bookings.create');

@@ -17,7 +17,7 @@ const swiperPopular = new Swiper(".popular__container", {
     slidesPerView: "auto",
     loop: true,
     autoplay: {
-        delay: 3500, // waktu antar slide (ms)
+        delay: 2000, // waktu antar slide (ms)
         disableOnInteraction: false, // tetap auto meski user klik/geser
     },
     navigation: {
