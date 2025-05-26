@@ -18,8 +18,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->string('role')->nullable()->default('user')->after('remember_token');
-            $table->timestamps();
+            $table->string('role')->nullable()->default('user');
+            $table->timestamps(); // Ini akan membuat kolom 'created_at' dan 'updated_at'
         });
     }
 

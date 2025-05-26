@@ -13,24 +13,25 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
+            $table->string('order_id')->unique();
             $table->string('name');
             $table->string('email');
             $table->string('number_phone');
-            $table->string('ktp')->nullable(); // Kolom KTP opsional
-            $table->string('paspor')->nullable(); // Kolom Paspor opsional
-            $table->string('vaccine_document')->nullable()->after('paspor');
+            $table->string('ktp')->nullable();
+            $table->string('paspor')->nullable();
+            $table->string('vaccine_document')->nullable();
+            $table->bigInteger('travel_package_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
+            $table->string('shipment_receipt')->nullable();
+            $table->string('shipment_info')->nullable();
+            $table->timestamps(); // Ini akan membuat kolom 'created_at' dan 'updated_at'
+            $table->tinyInteger('user_receipt_confirmation')->default(0);
 
-            // Relasi ke travel_packages
-            $table->foreignId('travel_package_id')->constrained()->cascadeOnDelete();
-
-            // Tambahkan relasi ke users
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-
-            // Dari add_order_Id
-            $table->string('order_id')->unique()->after('id')->nullable(false);
-
+            $table->foreign('travel_package_id')->references('id')->on('travel_packages')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
+
 
     /**
      * Reverse the migrations.
