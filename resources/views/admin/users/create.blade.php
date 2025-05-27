@@ -55,7 +55,6 @@
                                     <option value="sekretaris">{{ __('Sekretaris') }}</option>
                                     <option value="bendahara">{{ __('Bendahara') }}</option>
                                     <option value="administrasi">{{ __('Administrasi') }}</option>
-                                    <option value="user">{{ __('User') }}</option>
                                 </select>
                                 @error('role')
                                 <span class="invalid-feedback" role="alert">

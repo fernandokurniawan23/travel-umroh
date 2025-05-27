@@ -60,7 +60,6 @@
                                     <option value="sekretaris" {{ old('role', $user->role) === 'sekretaris' ? 'selected' : '' }}>{{ __('Sekretaris') }}</option>
                                     <option value="bendahara" {{ old('role', $user->role) === 'bendahara' ? 'selected' : '' }}>{{ __('Bendahara') }}</option>
                                     <option value="administrasi" {{ old('role', $user->role) === 'administrasi' ? 'selected' : '' }}>{{ __('Administrasi') }}</option>
-                                    <option value="user" {{ old('role', $user->role) === 'user' ? 'selected' : '' }}>{{ __('User') }}</option>
                                 </select>
                                 @error('role')
                                 <span class="invalid-feedback" role="alert">
