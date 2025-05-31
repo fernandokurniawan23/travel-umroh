@@ -42,19 +42,19 @@
                                     <input type="text" class="form-control" id="number_phone" name="number_phone" value="{{ old('number_phone') }}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="ktp">KTP</label>
+                                    <label for="ktp">KTP MAX: 2MB</label>
                                     <input type="file" class="form-control" id="ktp" name="ktp">
                                 </div>
                                 <div class="form-group">
-                                    <label for="paspor">Paspor</label>
+                                    <label for="paspor">Paspor MAX: 2MB</label>
                                     <input type="file" class="form-control" id="paspor" name="paspor">
                                 </div>
                                 <div class="form-group">
-                                    <label for="vaccine_document">Dokumen Vaksin</label>
+                                    <label for="vaccine_document">Dokumen Vaksin MAX: 2MB</label>
                                     <input type="file" class="form-control" id="vaccine_document" name="vaccine_document">
                                 </div>
                                 <div class="form-group">
-                                    <label for="shipment_receipt">Bukti Pengiriman Perlengkapan</label>
+                                    <label for="shipment_receipt">Bukti Penerimaan Perlengkapan MAX: 2MB</label>
                                     <input type="file" class="form-control" id="shipment_receipt" name="shipment_receipt" accept=".pdf,.jpg,.jpeg,.png">
                                 </div>
                                 <div class="form-group">

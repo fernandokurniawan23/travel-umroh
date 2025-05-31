@@ -4,10 +4,10 @@
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
-            <div class="col-sm-12 d-flex justify-content-between">
+            <div class="col-sm-12 d-flex justify-content-between align-items-center">
                 <h1 class="m-0">{{ __('Users') }}</h1>
                 @if(auth()->user()->role == 'administrator')
-                <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
+                <a href="{{ route('admin.users.create') }}" class="btn btn-primary btn-sm">
                     <i class="fa fa-plus"></i> Tambah User
                 </a>
                 @endif
@@ -21,44 +21,43 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body p-0">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
-                                    @if(auth()->user()->role === 'administrator')
-                                    <th>Actions</th>
-                                    @endif
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($users as $user)
-                                <tr>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->role }}</td>
-                                    <td>
-                                        @if(auth()->user()->role == 'administrator')
-                                        <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-warning">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
+                        <div style="overflow-x: auto;">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        @if(auth()->user()->role === 'administrator')
+                                        <th>Actions</th>
                                         @endif
-
-                                        @if(auth()->user()->role == 'administrator')
-                                        <form onclick="return confirm('Apakah anda yakin ingin menghapus user ini?');" class="d-inline-block" action="{{ route('admin.users.destroy', $user->id) }}" method="post">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="btn btn-sm btn-danger">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </form>
-                                        @endif
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($users as $user)
+                                    <tr>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->role }}</td>
+                                        <td>
+                                            @if(auth()->user()->role == 'administrator')
+                                            <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-warning">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <form onclick="return confirm('Apakah anda yakin ingin menghapus user ini?');" class="d-inline-block" action="{{ route('admin.users.destroy', $user->id) }}" method="post">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class="btn btn-sm btn-danger">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </form>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div class="card-footer clearfix">
                         {{ $users->links() }}
@@ -68,4 +67,17 @@
         </div>
     </div>
 </div>
+
+<style>
+@media (max-width: 576px) {
+    .justify-content-between {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+
+    .btn-primary {
+        margin-top: 1rem;
+    }
+}
+</style>
 @endsection

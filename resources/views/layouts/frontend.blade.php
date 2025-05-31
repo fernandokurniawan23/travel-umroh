@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Haromain Travel menyediakan layanan umrah dan haji resmi dengan harga terjangkau. Percayakan perjalanan ibadah Anda bersama travel terpercaya dan berizin.">
 
     <!--=============== BOXICONS ===============-->
     <link
@@ -20,7 +21,7 @@
     <!--=============== CSS ===============-->
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/style.css') }}" />
     @stack('style-alt')
-    <title>Travel Website</title>
+    <title>Haromain Travel - Umrah Murah, Haji Plus, Travel Umrah Terpercaya</title>
 </head>
 
 <body>
@@ -28,7 +29,7 @@
     <header class="header" id="header">
         <nav class="nav container">
             <a href="{{ route('homepage') }}" class="nav__logo">
-                <img src="{{ asset('frontend/assets/img/logo.png') }}" alt="HAROMAIN TRAVEL Logo" style="width: 100px; height: auto;">
+                <img src="{{ asset('frontend/assets/img/logo.png') }}" alt="logo haromain travel" style="width: 100px; height: auto;">
             </a>
 
             <div class="nav__menu">
@@ -97,9 +98,9 @@
     <footer class="footer section">
         <div class="footer__container container grid">
             <div>
-                <a href="{{ route('homepage') }}" class="footer__logo">
+                <!-- <a href="{{ route('homepage') }}" class="footer__logo">
                     <img src="{{ asset('frontend/assets/img/logo.png') }}" alt="HAROMAIN TRAVEL Logo" style="width: 150px; height: auto;">
-                </a>
+                </a> -->
                 <!-- <p class="footer__description">
                     Visi kami adalah menjadi penyedia travel umroh dan haji terpercaya <br />
                     dengan layanan terbaik untuk perjalanan ibadah <br />

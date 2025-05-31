@@ -25,7 +25,7 @@
             <div class="package-travel">
                 <h3>Booking Now</h3>
                 <p style="margin: 10px 0; color: #555; line-height: 1.6; text-align: left;">
-                    Belum punya KTP/paspor atau ragu upload? Kolom bisa dikosongkan. Nantinya Admin akan hubungi Anda untuk lengkapi data.
+                    Admin akan hubungi Anda untuk lengkapi data diri pribadi.<br>Setelah isi Form anda akan di arahkan ke WA
                 </p>
                 <div class="card">
                     <form id="bookingForm" action="{{ route('booking.store') }}" method="post" enctype="multipart/form-data">
@@ -46,7 +46,7 @@
                             <small class="text-danger d-block mt-1">{{ $message }}</small>
                         @enderror
 
-                        <div class="ktp-file">
+                        <!-- <div class="ktp-file">
                             <label for="ktp" class="ktp-file-label">Your KTP (Opsional)</label>
                             <input type="file" class="ktp-file-input" id="ktp" name="ktp" accept="image/*" />
                         </div>
@@ -54,7 +54,7 @@
                         <div class="paspor-file">
                             <label for="paspor" class="paspor-file-label">Your Passport (Opsional)</label>
                             <input type="file" class="paspor-file-input" id="paspor" name="paspor" accept="image/*" />
-                        </div>
+                        </div> -->
 
                         {{-- reCAPTCHA --}}
                         <div class="form-group mt-3">

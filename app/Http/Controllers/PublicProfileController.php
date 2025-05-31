@@ -7,6 +7,7 @@ use App\Models\Payment;
 use App\Models\Booking;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Validator;
 
 class PublicProfileController extends Controller
 {
@@ -82,4 +83,34 @@ class PublicProfileController extends Controller
 
         return back()->with('success', 'Anda telah mengkonfirmasi penerimaan perlengkapan.');
     }
+     public function uploadReceipt(Request $request, Booking $booking)
+    {
+        $validator = Validator::make($request->all(), [
+            'shipment_receipt' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ], [
+            'shipment_receipt.required' => 'Bukti penerimaan harus diunggah.',
+            'shipment_receipt.image' => 'File harus berupa gambar.',
+            'shipment_receipt.mimes' => 'Format gambar yang didukung adalah jpeg, png, jpg.',
+            'shipment_receipt.max' => 'Ukuran gambar maksimal adalah 2MB.',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors(['upload_error_' . $booking->id => $validator->errors()->first('shipment_receipt')]);
+        }
+
+        if ($request->hasFile('shipment_receipt')) {
+            $file = $request->file('shipment_receipt');
+            $filename = 'bukti_user_' . time() . '.' . $file->getClientOriginalExtension();
+            // Simpan path relatif tanpa 'public/'
+            $path = $file->store('uploads/bukti_pengiriman', 'public');
+
+            // Setelah store, $path akan seperti 'uploads/bukti_pengiriman/nama_file.jpg'
+            $booking->update(['shipment_receipt' => $path]);
+
+            return back()->with(['upload_success_' . $booking->id => 'Bukti penerimaan berhasil diunggah.']);
+        }
+
+        return back()->withErrors(['upload_error_' . $booking->id => 'Gagal mengunggah bukti penerimaan.']);
+    }
+
 }

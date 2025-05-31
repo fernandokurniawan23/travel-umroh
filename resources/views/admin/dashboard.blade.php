@@ -64,26 +64,27 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-info">
-                    <div class="inner">
-                        <h3>Rp. {{ number_format($totalRevenue, 0, ',', '.') }}</h3>
-                        <p>Total Pendapatan</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-money-bill-wave"></i>
+            <div class="col-12 d-flex flex-wrap">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12 p-2">
+                    <div class="small-box bg-info d-flex flex-column">
+                        <div class="inner">
+                            <h3>Rp. {{ number_format($totalRevenue, 0, ',', '.') }}</h3>
+                            <p>Total Pendapatan</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-success">
-                    <div class="inner">
-                        <h3>Rp. {{ number_format($monthlyRevenue, 0, ',', '.') }}</h3>
-                        <p>Pendapatan Bulan Ini</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-chart-line"></i>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12 p-2">
+                    <div class="small-box bg-success d-flex flex-column">
+                        <div class="inner">
+                            <h3>Rp. {{ number_format($monthlyRevenue, 0, ',', '.') }}</h3>
+                            <p>Pendapatan Bulan Ini</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -27,17 +27,18 @@ services:
     networks:
       - mynetwork
       # - tunnel
+      
 
 
   app:
     build:
-      # context: .
+      context: .
       dockerfile: Dockerfile
     container_name: laravel_app
     restart: always
     volumes:
       - .:/var/www
-      - ./travel-umroh/storage/app/public:/var/www/storage/app/public
+      - ./storage/app/public:/var/www/storage/app/public
     # ports:
     #   - "80:80"
     command: >

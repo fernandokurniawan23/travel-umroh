@@ -200,4 +200,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [\App\Http\Controllers\PublicProfileController::class, 'show'])->name('user.profile.show');
     Route::get('/profile/payments', [\App\Http\Controllers\PublicProfileController::class, 'paymentHistory'])->name('user.profile.payments');
     Route::post('/profile/bookings/{booking}/received', [\App\Http\Controllers\PublicProfileController::class, 'markReceiptReceived'])->name('user.booking.markReceived');
+    Route::post('/profile/bookings/{booking}/upload-receipt', [\App\Http\Controllers\PublicProfileController::class, 'uploadReceipt'])->name('user.booking.uploadReceipt');
 });

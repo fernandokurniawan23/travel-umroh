@@ -66,7 +66,7 @@
                                         <th>Vaksin</th>
                                         <th>Travel Package</th>
                                         <th>Info Pengiriman</th>
-                                        <th>Bukti Pengiriman</th>
+                                        <th>Bukti Penerimaan</th>
                                         <th>Konfirmasi User</th>
                                         @if(in_array(auth()->user()->role, ['administrator', 'administrasi']))
                                         <th>Action</th>

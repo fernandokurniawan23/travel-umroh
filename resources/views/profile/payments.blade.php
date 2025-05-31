@@ -25,7 +25,8 @@
                     <div class="card-header">
                         <strong>Nama Pemesan:</strong> {{ $bookingDetails[$bookingId]['name'] }}<br>
                         <strong>Paket Travel:</strong> {{ $bookingDetails[$bookingId]['package'] }}<br>
-                        <strong>Harga Paket:</strong> Rp. {{ number_format($bookingDetails[$bookingId]['price']) }}
+                        <strong>Harga Paket:</strong> Rp. {{ number_format($bookingDetails[$bookingId]['price']) }}<br>
+                        <strong>Sisa Pembayaran:</strong> Rp. {{ number_format(end($payments)['remaining']) }}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive"> {{-- Tambahkan div ini --}}
@@ -81,7 +82,7 @@
                     <thead>
                         <tr>
                             <th>Info Pengiriman/No. Resi</th>
-                            <th>Bukti Pengiriman</th>
+                            <th>Bukti Penerimaan</th>
                             <th>Konfirmasi Penerimaan</th>
                         </tr>
                     </thead>
@@ -92,11 +93,41 @@
                                 <td>{{ $details['shipment_info'] ?? '-' }}</td>
                                 <td>
                                     @if($details['shipment_receipt'])
-                                    <a href="{{ Storage::url($details['shipment_receipt']) }}" target="_blank">Lihat Bukti</a>
+                                        <a href="{{ Storage::url($details['shipment_receipt']) }}" target="_blank" class="btn btn-sm btn-outline-primary w-100 mb-2">
+                                            Lihat Bukti
+                                        </a>
                                     @else
-                                    Belum ada bukti diunggah
+                                        <form method="POST" action="{{ route('user.booking.uploadReceipt', $bookingId) }}"
+                                              enctype="multipart/form-data" class="mt-2">
+                                            @csrf
+                                            <div class="mb-2">
+                                                <label for="shipment_receipt" class="form-label small d-block">MAX: 2MB</label>
+                                                <input type="file"
+                                                      class="form-control form-control-sm"
+                                                      id="shipment_receipt"
+                                                      name="shipment_receipt"
+                                                      accept=".pdf,.jpg,.jpeg,.png"
+                                                      style="font-size: 0.875rem;">
+                                            </div>
+                                            <button type="submit" class="btn btn-sm btn-primary w-100">
+                                                Unggah
+                                            </button>
+                                        </form>
+
+                                        @if(session('upload_success_'.$bookingId))
+                                            <div class="alert alert-success mt-2 small w-100">
+                                                {{ session('upload_success_'.$bookingId) }}
+                                            </div>
+                                        @endif
+
+                                        @error('shipment_receipt')
+                                            <div class="alert alert-danger mt-2 small w-100">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     @endif
                                 </td>
+
                                 <td>
                                     @if ($details['shipment_info'])
                                         @if (!$details['user_receipt_confirmation'])
