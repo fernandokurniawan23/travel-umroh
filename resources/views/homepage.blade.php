@@ -9,7 +9,7 @@
             <section class="feature">
                 <img
                     src="{{ asset('frontend/assets/img/home.jpg') }}"
-                    alt=""
+                    alt="Haromain Travel - Umrah Murah, Haji Plus, Travel Umrah Terpercaya"
                     class="feature__bg" />
                 <div class="bg__overlay">
                     <div class="feature__container container">
@@ -53,7 +53,7 @@
                     <a href="{{ route('travel_package.show', $travel_package->slug) }}">
                         <img
                             src="{{ Storage::url($travel_package->galleries->first()->images) }}"
-                            alt=""
+                            alt="Haromain Travel - Umrah Murah, Haji Plus, Travel Umrah Terpercaya"
                             class="popular__img" />
                         <div class="popular__data">
                             <h2
@@ -90,7 +90,7 @@
             <div class="value__orbe"></div>
 
             <div class="value__img">
-                <img src="{{ asset('frontend/assets/img/team.jpg') }}" alt="" />
+                <img src="{{ asset('frontend/assets/img/team.jpg') }}" alt="Haromain Travel - Umrah Murah, Haji Plus, Travel Umrah Terpercaya" />
             </div>
         </div>
 
