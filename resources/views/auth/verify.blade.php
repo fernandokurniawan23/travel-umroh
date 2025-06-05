@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title', 'Verify - Haromain Travel')
 @section('content')
     <div class="card-body login-card-body">
         <p class="login-box-msg">{{ __('Verify Your Email Address') }}</p>

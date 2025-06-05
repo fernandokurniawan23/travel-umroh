@@ -8,6 +8,13 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 class Kernel extends ConsoleKernel
 {
     /**
+     * Register custom artisan commands
+     */
+    protected $commands = [
+        \App\Console\Commands\GenerateSitemap::class,
+    ];
+
+    /**
      * Define the application's command schedule.
      */
     protected function schedule(Schedule $schedule): void

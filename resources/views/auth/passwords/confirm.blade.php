@@ -1,5 +1,6 @@
 @extends('layouts.guest')
 
+@section('title', 'Reset Password - Haromain Travel')
 @section('content')
     <div class="card-body login-card-body">
         <p class="login-box-msg">{{ __('Please confirm your password before continuing.') }}</p>

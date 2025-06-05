@@ -1,5 +1,6 @@
 @extends('layouts.guest')
 
+@section('title', 'Register - Haromain Travel')
 @section('content')
     <div class="card-body login-card-body">
         <p class="login-box-msg">{{ __('Register') }}</p>
